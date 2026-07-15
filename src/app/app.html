@@ -1,0 +1,15 @@
+<app-header />
+<main>
+  <app-hero />
+  <app-about />
+  <app-projects-section
+    [projects]="projects"
+    (openDialog)="openDialog($event)"
+  />
+</main>
+<app-footer />
+
+<app-project-dialog
+  [project]="dialogProject()"
+  (closeDialog)="closeDialog()"
+/>

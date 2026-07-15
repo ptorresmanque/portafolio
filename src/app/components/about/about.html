@@ -1,0 +1,33 @@
+<section
+  id="sobre-mi"
+  class="border-y border-border bg-background/50 py-20 backdrop-blur-sm md:py-28"
+>
+  <div class="mx-auto grid max-w-6xl gap-12 px-6 md:grid-cols-[1fr_2fr] md:gap-16">
+    <div>
+      <p class="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-accent">Sobre mí</p>
+      <h2 class="text-display text-3xl text-foreground md:text-4xl">
+        Producto, equipo y código limpio.
+      </h2>
+    </div>
+
+    <div class="space-y-5 text-base leading-relaxed text-secondary md:text-lg">
+      <p>
+        Llevo 7 años construyendo productos web en producción: desde dashboards internos con cientos de miles de usuarios hasta marketplaces B2C con tráfico orgánico real.
+      </p>
+      <p>
+        Me obsesionan tres cosas: que la UI se sienta bien al usarla, que el código envejezca bien y que las decisiones técnicas queden justificadas para quien venga después.
+      </p>
+      <p>
+        Actualmente trabajo como frontend lead en proyectos de Angular, pero me muevo cómodo en todo el stack cuando el equipo lo necesita.
+      </p>
+
+      <div class="flex flex-wrap gap-2 pt-4">
+        @for (tech of stack; track tech) {
+          <span
+            class="rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-foreground"
+          >{{ tech }}</span>
+        }
+      </div>
+    </div>
+  </div>
+</section>

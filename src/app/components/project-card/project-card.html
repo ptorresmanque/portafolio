@@ -1,0 +1,72 @@
+<article
+  class="animate-card-in group flex flex-col overflow-hidden rounded-2xl border border-border bg-background transition-all duration-200 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-[0_20px_40px_-20px_rgba(9,9,11,0.18)]"
+  [style.animation-delay.ms]="index() * 60"
+>
+  <div class="relative aspect-[16/10] overflow-hidden bg-muted">
+    <img
+      [ngSrc]="project().image"
+      [alt]="project().imageAlt"
+      fill
+      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+      [priority]="index() < 2"
+      class="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+    />
+    <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/15 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+  </div>
+
+  <div class="flex flex-1 flex-col gap-5 p-6 md:p-7">
+    <header class="flex flex-col gap-1">
+      <div class="flex items-baseline justify-between gap-3">
+        <h3 class="text-display text-2xl text-foreground md:text-[1.7rem]">
+          {{ project().title }}
+        </h3>
+        <span class="shrink-0 font-mono text-[11px] font-medium text-secondary">
+          {{ project().year }}
+        </span>
+      </div>
+      <p class="text-sm text-secondary">
+        {{ project().company }} · <span class="text-accent">{{ project().role }}</span>
+      </p>
+    </header>
+
+    <p class="text-[15px] leading-relaxed text-secondary">
+      {{ project().shortDescription }}
+    </p>
+
+    <div class="flex flex-wrap gap-1.5">
+      @for (tech of project().technologies; track tech) {
+        <span class="rounded-full bg-muted px-2.5 py-1 text-[11px] font-medium text-secondary">
+          {{ tech }}
+        </span>
+      }
+    </div>
+
+    <div class="mt-auto flex items-center justify-between border-t border-border pt-5">
+      <p class="text-xs text-secondary line-clamp-2">
+        {{ project().body | slice:0:90 }}…
+      </p>
+      <button
+        type="button"
+        (click)="openDialog.emit(project())"
+        class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-xs font-medium text-background transition-colors hover:bg-accent"
+        [attr.aria-label]="'Ver carta de recomendación de ' + project().title"
+      >
+        Ver carta
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+          class="transition-transform group-hover:translate-x-0.5"
+        >
+          <path d="M5 12h14M13 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</article>
