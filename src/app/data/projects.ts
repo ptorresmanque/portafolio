@@ -6,44 +6,81 @@ const u = (id: string, w = 1600): string =>
 export const PROJECTS: Project[] = [
   {
     id: 'telemetria-2-0',
-    title: 'Telemetria 2.0',
-    company: '— pendiente',
-    year: '2024',
-    role: 'Frontend lead',
+    kind: 'work',
+    title: 'Telemetría 2.0',
+    company: 'Aguas Nuevas S.A.',
+    year: '2019 — 2022',
+    role: 'Frontend Developer · SCADA Developer (AVEVA) · DBA',
     image: u('1551288049-bebda4e38f71'),
     imageAlt: 'Dashboard con gráficos de telemetría en tiempo real',
     shortDescription:
-      'Plataforma de telemetría IoT que centraliza métricas de dispositivos en terreno y dispara alertas configurables en tiempo real.',
-    technologies: ['Angular', 'RxJS', 'D3.js', 'Node.js', 'PostgreSQL', 'WebSockets'],
-    body: `Telemetria 2.0 nació como la segunda iteración de un sistema interno que monitorea más de 4.000 dispositivos distribuidos en terreno. Mi rol fue liderar el desarrollo frontend desde cero: diseñé la arquitectura de módulos, el sistema de streams reactivos con RxJS para ingestar eventos en vivo y la librería de visualización con D3.js que se reutiliza entre los distintos paneles.
+      'Unificación de la telemetría y los sistemas SCADA del grupo Aguas Nuevas (4 empresas) en una plataforma común con visualización web en tiempo real para 50+ plantas.',
+    technologies: [
+      'AVEVA System Platform',
+      'Oracle SQL',
+      'Angular',
+      'Spring Boot',
+      'Python',
+      'Highcharts',
+      'Git',
+    ],
+    body: `Telemetría 2.0 surgió como respuesta a una problemática estructural del grupo Aguas Nuevas: cada una de las cuatro empresas que lo componían —Aguas Altiplano, Aguas Chañar, Aguas Araucanía y Aguas Magallanes— operaba su propio sistema SCADA de manera independiente, con versiones obsoletas, licencias en modo trial y sin parches de seguridad. La administración de estos sistemas recaía en el área de mantenimiento —frecuentemente con personal subcontratado— sin protocolos formales de soporte, lo que impedía centralizar la información operativa y explotar la data generada por las plantas de tratamiento y distribución de agua.
 
-El desafío técnico más interesante fue mantener 60 fps en el panel principal con gráficos actualizándose cada segundo. Resolví esto combinando un buffer de muestras con requestAnimationFrame y deduplicación por device-id, lo que bajó el CPU del cliente de ~80% a ~15%. Adicionalmente construí un DSL declarativo para que operadores no técnicos puedan definir alertas complejas sin tocar código.
+El proyecto abordó esta fragmentación con un alcance definido: acordar un nuevo diseño de SCADA, construir un sistema unificado para las cuatro empresas, migrar las bases de datos de las plantas —incluyendo la emblemática desalinizadora por ósmosis inversa de Iquique—, incorporar progresivamente la totalidad de las plantas a la nueva plataforma, desarrollar una aplicación web para la visualización de los datos unificados y capacitar a los operarios en su uso.
 
-El producto estuvo en producción durante 14 meses con un uptime medido del 99.94% y fue el primer sistema interno en ser migrado completamente a la nueva plataforma de la empresa.`,
-    letterImage: u('1455390582262-044cdead277a', 1200),
-    letterAlt: 'Carta de recomendación firmada por el responsable del proyecto Telemetria 2.0',
+Mi rol fue integral: participé en la toma de requerimientos, el análisis y diseño de soluciones, la implementación del sistema SCADA sobre AVEVA System Platform (versiones 2017 a 2021), la migración de las bases de datos en Oracle SQL, el desarrollo frontend de la aplicación de visualización con Angular y Spring Boot, y la capacitación a los operarios de las plantas. El trabajo se enmarcó en el ciclo de vida de desarrollo de software (SDLC) como metodología de gestión.
+
+Entre los principales logros del proyecto destaco la unificación de las bases de datos de las cuatro empresas del grupo, la migración exitosa de más de cincuenta plantas al nuevo sistema SCADA —incluida la desalinizadora de Iquique— y la implementación de la aplicación web para la visualización de datos operativos.`,
+    letter: {
+      paragraphs: [
+        'Por medio de la presente, yo Michael Antonio Bórquez Sandoval, Jefe de Proyectos en Aguas Nuevas S.A., me permito emitir esta carta de referencia profesional a favor del Sr. Patricio Emanuel Manquepillan Torres, quien se desempeñó en nuestra organización durante el período 2019–2022 en los roles de Frontend Developer, SCADA Developer sobre AVEVA System Platform y Administrador de Bases de Datos.',
+        'El Sr. Manquepillan fue parte del equipo del "Proyecto 2.0", una iniciativa estratégica orientada a unificar la telemetría y los sistemas de supervisión de las cuatro empresas que en ese momento componían el grupo Aguas Nuevas: Aguas Altiplano, Aguas Chañar, Aguas Araucanía y Aguas Magallanes. Hasta entonces, cada empresa operaba de forma independiente su propio sistema SCADA, con versiones obsoletas, licencias en modo trial y sin parches de seguridad. La administración de estos sistemas recaía en el área de mantenimiento —frecuentemente con personal subcontratado— sin protocolos formales de soporte, lo que impedía almacenar la información operativa de manera centralizada y, por tanto, explotar la data generada por las plantas de tratamiento y distribución de agua. El proyecto abordó estas brechas con un alcance definido: acordar un nuevo diseño de SCADA, construir un sistema unificado para las cuatro empresas, migrar las bases de datos de las plantas —incluyendo la emblemática desalinizadora por ósmosis inversa de Iquique—, incorporar progresivamente la totalidad de las plantas a la nueva plataforma, desarrollar una aplicación web para la visualización de los datos unificados y capacitar a los operarios en su uso.',
+        'En el ámbito técnico, el Sr. Manquepillan demostró un dominio consistente de un stack diverso y exigente: AVEVA System Platform en sus versiones 2017 a 2021 para la implementación del SCADA corporativo, Oracle SQL para la administración y migración de las bases de datos, Angular y Spring Boot como base de la aplicación web de visualización, Python para tareas de soporte y análisis, Git como sistema de control de versiones y Highcharts para la representación de indicadores operativos. Su participación fue integral, abarcando la toma de requerimientos, el análisis y diseño de soluciones, la implementación del sistema SCADA, la migración de las bases de datos, el desarrollo frontend y la capacitación a los operarios de las plantas.',
+        'Su trabajo se enmarcó en el ciclo de vida de desarrollo de software (SDLC) como metodología de gestión, lo que se tradujo en entregas consistentes, documentadas y alineadas con los hitos del proyecto. Entre los logros atribuibles a su contribución destaco la unificación de las bases de datos de las cuatro empresas del grupo, la migración exitosa de más de cincuenta plantas al nuevo sistema SCADA —incluida la desalinizadora de Iquique— y la implementación de la aplicación web para la visualización de datos.',
+        'Por lo expuesto, recomiendo al Sr. Manquepillan sin reservas como un profesional técnicamente sólido, autónomo y comprometido, capaz de asumir proyectos de alta complejidad técnica en entornos críticos. Considero que su perfil constituye un aporte valioso para cualquier organización o programa que demande competencias comprobadas en sistemas SCADA, gestión de bases de datos y desarrollo de aplicaciones web en el sector industrial.',
+      ],
+      signer: {
+        name: 'Michael Antonio Bórquez Sandoval',
+        role: 'Jefe de Proyectos',
+        company: 'Aguas Nuevas S.A.',
+      },
+    },
   },
   {
     id: 'backstops',
+    kind: 'work',
     title: 'Backstops',
-    company: '— pendiente',
-    year: '2023',
-    role: 'Fullstack engineer',
+    company: 'Banco Santander España',
+    year: '2022 — 2025',
+    role: 'Frontend → Backend Engineer',
     image: u('1611974789855-9c2a0a7236a3'),
     imageAlt: 'Interfaz de plataforma financiera con tablas y métricas',
     shortDescription:
-      'Producto fintech B2B para gestionar backstops crediticios: reglas configurables, scoring y reporting regulatorio automatizado.',
-    technologies: ['Angular', 'NestJS', 'TypeScript', 'PostgreSQL', 'Redis', 'Stripe'],
-    body: `Backstops centraliza la operatoria de backstops crediticios de una fintech en pleno proceso de salida a mercado regulatorio. Llegué como fullstack pero terminé prácticamente dueño técnico del producto junto al CTO.
+      'Sistema de gestión automatizada de backstops crediticios para el área de Capital, desarrollado en el marco de una iniciativa conjunta con la Unión Europea.',
+    technologies: ['Angular', 'Java', 'Spring Boot', 'Kubernetes', 'Git'],
+    body: `Backstops es el sistema de gestión automatizada de backstops crediticios que desarrollé como parte del equipo de NTT Data España asignado al área de Capital de Banco Santander España, en el marco de una iniciativa conjunta del banco con la Unión Europea. Trabajé en este proyecto entre abril de 2022 y abril de 2025 bajo el liderazgo técnico de Tiago Joel Da Silva Monteiro (Senior Technical Lead en NTT Data España).
 
-Construí desde el motor de reglas (un AST tipado en TypeScript que se serializa a Postgres para auditoría) hasta las APIs REST con NestJS, además de las pantallas de configuración de políticas y los flujos de revisión manual que usan los analistas.
+El producto centraliza las políticas de cobertura crediticia del banco: motor de reglas configurable, scoring de operaciones, integración con los sistemas internos del área de Capital y un módulo de reporting regulatorio que automatizaba la generación de reportes que antes se elaboraban de forma manual.
 
-La pieza que más disfruté fue el módulo de reporting regulatorio: automatizaba reportes que antes se hacían a mano en Excel y que tomaban 3 días por cierre mensual. Lo dejé en 2 horas por click, con lineage de datos trazable y firma digital de cada versión generada. Fue el primer entregable que aprobaron los auditores sin observaciones.`,
-    letterImage: u('1455390582262-044cdead277a', 1200),
-    letterAlt: 'Carta de recomendación firmada por el responsable del proyecto Backstops',
+Mi rol evolucionó de frontend a fullstack a lo largo del proyecto. Inicié desarrollando las interfaces de configuración y monitoreo en Angular y, con el tiempo, fui asumiendo responsabilidades backend en Java y Spring Boot hasta llegar a gestionar y desplegar servicios de forma autónoma. La plataforma se ejecutaba sobre un clúster de Kubernetes, lo que permitía escalar automáticamente los workers de ingestión de datos, los microservicios de cálculo y las APIs internas del área según la carga operativa, con despliegues sin downtime.`,
+    letter: {
+      paragraphs: [
+        'Por medio de la presente, yo Tiago Joel Da Silva Monteiro, Senior Technical Lead en NTT Data España, me permito emitir esta carta de referencia profesional a favor del Sr. Patricio Emanuel Manquepillan Torres, con quien colaboré como parte del equipo de NTT Data España asignado al área de Capital de Banco Santander España, entre abril de 2022 y abril de 2025.',
+        'En el marco de una iniciativa conjunta del banco con la Unión Europea, el Sr. Manquepillan participó en el desarrollo de Backstops —un sistema de gestión automatizada de backstops crediticios que incluye motor de reglas configurable, scoring de operaciones e integración con los sistemas internos del banco, además de un módulo de reporting regulatorio automatizado— junto con otros proyectos del área de Capital en los que también colaboró activamente.',
+        'En el ámbito técnico, el Sr. Manquepillan demostró una evolución profesional notable. Aunque su perfil inicial estaba más enfocado en tecnologías frontend —particularmente con Angular—, a lo largo de los proyectos fue adquiriendo sólidos conocimientos y experiencia en el ámbito backend, llegando a dominar Java y Spring Boot y a asumir responsabilidades directas sobre la arquitectura y el ciclo de vida de los servicios. La plataforma se desplegó sobre un clúster de Kubernetes, lo que permitió orquestar los servicios backend del área —workers de ingestión de datos, microservicios de cálculo y APIs internas— con escalado automático según la carga operativa y despliegues sin downtime. En el frontend, su trabajo con Angular se mantuvo como pieza clave de las interfaces de configuración y monitoreo del área de Capital.',
+        'La evolución técnica del Sr. Manquepillan, junto con la calidad de su trabajo, le permitió asumir progresivamente mayores responsabilidades hasta llegar a gestionar y desarrollar proyectos de forma autónoma. Esta capacidad de adaptación y crecimiento fue especialmente valiosa en un entorno exigente como el del área de Capital de una gran entidad bancaria, donde las prioridades cambian con frecuencia y los plazos regulatorios son estrictos. El Sr. Manquepillan mostró siempre un elevado sentido de la responsabilidad, una actitud colaborativa y una excelente disposición para trabajar con otros equipos del banco y con los interlocutores del programa conjunto con la Unión Europea cuando la situación lo requería.',
+        'Por todo lo expuesto, considero que el Sr. Manquepillan cuenta con una experiencia profesional sólida, una actitud ejemplar y las capacidades necesarias para afrontar con éxito nuevos retos académicos y profesionales. Lo recomiendo sin reservas.',
+      ],
+      signer: {
+        name: 'Tiago Joel Da Silva Monteiro',
+        role: 'Senior Technical Lead',
+        company: 'NTT Data España',
+      },
+    },
   },
   {
     id: 'comunidad-madrid',
+    kind: 'work',
     title: 'Comunidad de Madrid',
     company: '— pendiente',
     year: '2023',
@@ -58,15 +95,16 @@ La pieza que más disfruté fue el módulo de reporting regulatorio: automatizab
 La restricción de accesibilidad WCAG AA fue la que más marqué el producto: cada componente pasó por revisión con NVDA y VoiceOver antes de mergear. Construí una librería de componentes accesibles (combobox custom, modal con focus trap, navegación con teclado en listados largos) que luego se convirtió en el estándar interno para los siguientes portales del gobierno regional.
 
 Otro pilar fue el SSR con Angular Universal: el portal recibe ~2M de visitas/mes y un TTFB sub-200ms era no negociable. Optimicé el caching de cabeceras, lazy-loading por ruta y pre-rendering de los 200 trámites más consultados.`,
-    letterImage: u('1455390582262-044cdead277a', 1200),
-    letterAlt: 'Carta de recomendación firmada por el responsable del proyecto Comunidad de Madrid',
   },
   {
     id: 'cualautocompro-cl',
+    kind: 'personal',
     title: 'cualautocompro.cl',
-    company: '— pendiente',
+    company: 'Proyecto personal',
     year: '2024',
     role: 'Tech lead',
+    githubUrl: 'https://github.com/ptorresmanque/CualAutoCompro',
+    siteUrl: 'https://cualautocompro.cl',
     image: u('1556742049-0cfed4f6a45d'),
     imageAlt: 'Tienda online con productos y carrito',
     shortDescription:
@@ -79,7 +117,5 @@ Diseñé la arquitectura headless: Angular para el storefront y Next.js para el 
 La pieza más interesante fue el ranker: cruza precio, tiempo de envío, reputación del vendedor y disponibilidad real. Implementé un sistema de pesos configurable por categoría (una búsqueda de notebooks pondera distinto que una de cepillos de dientes) y un sistema de explicabilidad para que el usuario entienda por qué un resultado ganó.
 
 Después del lanzamiento, el sitio promedió 18k visitas orgánicas mensuales con 6 conversiones diarias hacia los marketplaces afiliados.`,
-    letterImage: u('1455390582262-044cdead277a', 1200),
-    letterAlt: 'Carta de recomendación firmada por el responsable del proyecto cualautocompro.cl',
   },
 ];

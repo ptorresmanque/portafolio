@@ -1,6 +1,6 @@
 import { NgOptimizedImage, SlicePipe } from '@angular/common';
-import { Component, input, output } from '@angular/core';
-import { Project } from '../../models/project';
+import { Component, computed, input, output } from '@angular/core';
+import { PersonalProject, Project } from '../../models/project';
 
 @Component({
   selector: 'app-project-card',
@@ -12,4 +12,14 @@ export class ProjectCard {
   readonly project = input.required<Project>();
   readonly index = input<number>(0);
   readonly openDialog = output<Project>();
+
+  readonly githubUrl = computed<string>(() => {
+    const project = this.project();
+    return project.kind === 'personal' ? (project as PersonalProject).githubUrl : '';
+  });
+
+  readonly siteUrl = computed<string>(() => {
+    const project = this.project();
+    return project.kind === 'personal' ? (project as PersonalProject).siteUrl ?? '' : '';
+  });
 }

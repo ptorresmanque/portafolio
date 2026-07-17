@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 })
 export class Header {
   protected readonly scrolled = signal(false);
-  protected readonly email = 'tu@email.com';
+  protected readonly email = 'patriciomanquepillantorres@gmail.com';
 
   constructor() {
     if (typeof window === 'undefined') return;

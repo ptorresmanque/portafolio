@@ -33,20 +33,40 @@
       </header>
 
       <div class="flex-1 overflow-auto bg-muted/40">
-        <div class="mx-auto flex min-h-full max-w-4xl items-center justify-center p-6 md:p-10">
-          <!--
-            width/height intrínsecos del placeholder actual (1200x900).
-            Si reemplazas la imagen por una carta con otro aspect-ratio,
-            actualiza estos dos atributos para mantener la reserva de espacio (CLS=0)
-            y evitar el warning de NgOptimizedImage.
-          -->
-          <img
-            [ngSrc]="p.letterImage"
-            [alt]="p.letterAlt"
-            width="1200"
-            height="900"
-            class="max-h-[78dvh] h-auto w-auto max-w-full rounded-lg border border-border bg-background object-contain shadow-[0_30px_60px_-30px_rgba(9,9,11,0.25)]"
-          />
+        <div class="mx-auto max-w-3xl p-6 md:p-10">
+          @if (letter(); as letter) {
+            <article
+              class="rounded-lg border border-border bg-background p-8 shadow-[0_30px_60px_-30px_rgba(9,9,11,0.25)] md:p-12"
+            >
+              <div class="space-y-5 text-[15px] leading-[1.75] text-foreground">
+                @for (paragraph of letter.paragraphs; track $index) {
+                  <p class="text-justify">{{ paragraph }}</p>
+                }
+              </div>
+
+              <div class="mt-10 border-t border-border pt-6">
+                <p class="text-right text-foreground">Atentamente,</p>
+                <div class="mt-6 text-right text-sm text-secondary">
+                  <p class="font-display text-base font-bold text-foreground">
+                    {{ letter.signer.name }}
+                  </p>
+                  <p>{{ letter.signer.role }}</p>
+                  <p>{{ letter.signer.company }}</p>
+                </div>
+              </div>
+            </article>
+          } @else {
+            <div
+              class="flex min-h-[40dvh] flex-col items-center justify-center rounded-lg border border-dashed border-border bg-background p-10 text-center text-secondary"
+            >
+              <p class="text-sm font-medium uppercase tracking-[0.2em] text-accent">
+                Carta pendiente
+              </p>
+              <p class="mt-3 max-w-sm text-base">
+                La carta de referencia para este proyecto aún no está disponible.
+              </p>
+            </div>
+          }
         </div>
       </div>
 

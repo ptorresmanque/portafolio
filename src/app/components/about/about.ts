@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { yearsOfExperience } from '../../utils/experience';
 
 @Component({
   selector: 'app-about',
@@ -6,6 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './about.css',
 })
 export class About {
+  protected readonly yearsOfExperience = yearsOfExperience();
   protected readonly stack: readonly string[] = [
     'Angular',
     'TypeScript',

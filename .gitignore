@@ -42,3 +42,12 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Generated favicon assets (regenerate via `npm run favicon`)
+/public/favicon.ico
+/public/favicon.svg
+/public/favicon-*.png
+/public/apple-touch-icon.png
+/public/web-app-manifest-*.png
+/public/site.webmanifest
+/public/_favicon-markup.html

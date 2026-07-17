@@ -1,23 +1,29 @@
-import { NgOptimizedImage } from '@angular/common';
 import {
   Component,
   ElementRef,
+  computed,
   effect,
   input,
   output,
   viewChild,
 } from '@angular/core';
-import { Project } from '../../models/project';
+import { Letter, Project, WorkProject } from '../../models/project';
 
 @Component({
   selector: 'app-project-dialog',
-  imports: [NgOptimizedImage],
+  imports: [],
   templateUrl: './project-dialog.html',
   styleUrl: './project-dialog.css',
 })
 export class ProjectDialog {
   readonly project = input<Project | null>(null);
   readonly closeDialog = output<void>();
+
+  readonly letter = computed<Letter | null>(() => {
+    const project = this.project();
+    if (project?.kind !== 'work') return null;
+    return (project as WorkProject).letter ?? null;
+  });
 
   private readonly dialogRef = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
 

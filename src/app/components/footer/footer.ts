@@ -14,8 +14,8 @@ interface FooterLink {
 export class Footer {
   protected readonly year = new Date().getFullYear();
   protected readonly links: readonly FooterLink[] = [
-    { label: 'Email', href: 'mailto:tu@email.com', external: false },
+    { label: 'Email', href: 'mailto:patriciomanquepillantorres@gmail.com', external: false },
     { label: 'LinkedIn', href: '#', external: true },
-    { label: 'GitHub', href: '#', external: true },
+    { label: 'GitHub', href: 'https://github.com/ptorresmanque', external: true },
   ];
 }
