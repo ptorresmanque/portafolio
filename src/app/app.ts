@@ -11,6 +11,12 @@ import { TranslationService } from './i18n/translation.service';
 import { LangToggle } from './i18n/lang-toggle.component';
 import { TranslationPipe } from './i18n/translation.pipe';
 import { SeoService } from './seo/seo.service';
+import {
+  buildBreadcrumb,
+  buildCreativeWork,
+  buildPerson,
+  buildWebSite,
+} from './seo/json-ld.builder';
 
 @Component({
   selector: 'app-root',
@@ -43,6 +49,12 @@ export class App {
           description: this.i18n.t('meta.description'),
         });
         this.seo.setCanonical('https://patriciomanquepillan.com/');
+        this.seo.setStructuredData(buildPerson(), 'person');
+        this.seo.setStructuredData(buildWebSite(), 'website');
+        this.seo.setStructuredData(buildBreadcrumb(), 'breadcrumb');
+        for (const project of PROJECTS) {
+          this.seo.setStructuredData(buildCreativeWork(project), `project-${project.id}`);
+        }
       });
     });
   }
