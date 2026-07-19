@@ -20,7 +20,7 @@
 - Build output path: `dist/portafolio/browser/` (CI/CD already targets this).
 - Public assets are copied verbatim from `public/` (Angular's `**/*` glob).
 - Project ID slugs (e.g. `telemetria-2-0`) never change regardless of language.
-- Test framework is **vitest** (already configured). Run with `npx vitest run` or `npm test -- --watch=false`.
+- Test framework is **vitest** (already configured). Run with `npx ng test --watch=false` or `npm test -- --watch=false`.
 - Dev server: `npm start`. Production build: `npm run build`.
 
 ## File Structure
@@ -284,7 +284,7 @@ describe('TranslationService', () => {
 Run:
 
 ```bash
-npx vitest run src/app/i18n/translation.service.spec.ts
+npx ng test --watch=false --filter "^TranslationService" --include "src/app/i18n/translation.service.spec.ts"
 ```
 
 Expected: FAIL with "Cannot find module './translation.service'" or similar.
@@ -368,7 +368,7 @@ export class TranslationService {
 Run:
 
 ```bash
-npx vitest run src/app/i18n/translation.service.spec.ts
+npx ng test --watch=false --filter "^TranslationService" --include "src/app/i18n/translation.service.spec.ts"
 ```
 
 Expected: all 8 tests PASS.
@@ -439,7 +439,7 @@ describe('TranslationPipe', () => {
 Run:
 
 ```bash
-npx vitest run src/app/i18n/translation.pipe.spec.ts
+npx ng test --watch=false --filter "^TranslationPipe" --include "src/app/i18n/translation.pipe.spec.ts"
 ```
 
 Expected: FAIL with "Cannot find module".
@@ -469,7 +469,7 @@ Note: `pure: false` is required because the pipe reads from a signal — the cha
 Run:
 
 ```bash
-npx vitest run src/app/i18n/translation.pipe.spec.ts
+npx ng test --watch=false --filter "^TranslationPipe" --include "src/app/i18n/translation.pipe.spec.ts"
 ```
 
 Expected: all 4 tests PASS.
@@ -788,7 +788,7 @@ Expected: build succeeds.
 - [ ] **Step 4: Run all tests**
 
 ```bash
-npx vitest run
+npx ng test --watch=false
 ```
 
 Expected: existing tests pass.
@@ -887,7 +887,7 @@ Note: the CV href is hardcoded to `/cv-es.pdf` for Phase 1. Phase 3 will swap to
 
 ```bash
 npm run build 2>&1 | tail -10
-npx vitest run
+npx ng test --watch=false
 ```
 
 Expected: build succeeds, tests pass.
@@ -968,7 +968,7 @@ Replace the contents of `src/app/components/about/about.html` with:
 
 ```bash
 npm run build 2>&1 | tail -10
-npx vitest run
+npx ng test --watch=false
 ```
 
 Expected: build succeeds, tests pass.
@@ -1039,7 +1039,7 @@ Replace the contents of `src/app/components/projects-section/projects-section.ht
 
 ```bash
 npm run build 2>&1 | tail -10
-npx vitest run
+npx ng test --watch=false
 ```
 
 Expected: build succeeds, tests pass.
@@ -1253,7 +1253,7 @@ Replace the contents of `src/app/components/project-card/project-card.html` with
 
 ```bash
 npm run build 2>&1 | tail -10
-npx vitest run
+npx ng test --watch=false
 ```
 
 Expected: build succeeds, tests pass.
@@ -1363,7 +1363,7 @@ For `cualautocompro-cl` (after `technologies` array):
 
 ```bash
 npm run build 2>&1 | tail -10
-npx vitest run
+npx ng test --watch=false
 ```
 
 Expected: build succeeds, tests pass (existing tests still work — `highlights` is optional).
@@ -1609,7 +1609,7 @@ Expected: `OK keys: 45`.
 
 ```bash
 npm run build 2>&1 | tail -10
-npx vitest run
+npx ng test --watch=false
 ```
 
 Expected: build succeeds, tests pass.
@@ -1709,7 +1709,7 @@ Note: keep the exact CSS classes and the existing `links` array iteration that t
 
 ```bash
 npm run build 2>&1 | tail -10
-npx vitest run
+npx ng test --watch=false
 ```
 
 Expected: build succeeds, tests pass.
@@ -1789,7 +1789,7 @@ describe('SeoService', () => {
 - [ ] **Step 2: Run the test to verify it fails**
 
 ```bash
-npx vitest run src/app/seo/seo.service.spec.ts
+npx ng test --watch=false --filter "^SeoService" --include "src/app/seo/seo.service.spec.ts"
 ```
 
 Expected: FAIL with "Cannot find module".
@@ -1886,7 +1886,7 @@ Note: `inject()` is used for `Meta` and `Title` because it reads cleaner; `DOCUM
 - [ ] **Step 5: Run the test to verify it passes**
 
 ```bash
-npx vitest run src/app/seo/seo.service.spec.ts
+npx ng test --watch=false --filter "^SeoService" --include "src/app/seo/seo.service.spec.ts"
 ```
 
 Expected: all 4 tests PASS.
@@ -1977,7 +1977,7 @@ export class App {
 
 ```bash
 npm run build 2>&1 | tail -10
-npx vitest run
+npx ng test --watch=false
 ```
 
 Expected: build succeeds, tests pass.
@@ -2137,7 +2137,7 @@ The final `effect()` body should be:
 
 ```bash
 npm run build 2>&1 | tail -10
-npx vitest run
+npx ng test --watch=false
 ```
 
 Expected: build succeeds, tests pass.
@@ -2604,7 +2604,7 @@ describe('ProjectDialog', () => {
 - [ ] **Step 4: Run the test**
 
 ```bash
-npx vitest run src/app/components/project-dialog/project-dialog.spec.ts
+npx ng test --watch=false --filter "^ProjectDialog" --include "src/app/components/project-dialog/project-dialog.spec.ts"
 ```
 
 Expected: all 4 tests PASS.
@@ -2677,7 +2677,7 @@ Expected: 6 lines of `HTTP/1.1 200 OK`.
 - [ ] **Step 6: Run all tests one final time**
 
 ```bash
-npx vitest run
+npx ng test --watch=false
 ```
 
 Expected: all tests pass.
