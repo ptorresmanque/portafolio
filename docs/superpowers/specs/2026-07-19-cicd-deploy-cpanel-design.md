@@ -69,12 +69,12 @@ ssh user@host 'cd ~ && mv public_html releases/broken-$(date +%s) && mv releases
 
 ### 6. Secrets requeridos en GitHub
 
-| Nombre | Descripción |
-|---|---|
-| `CPANEL_SSH_KEY` | Contenido completo de la clave privada `cpanel_deploy` |
-| `CPANEL_SSH_USER` | Usuario SSH del servidor cPanel |
-| `CPANEL_SSH_HOST` | Hostname o IP del servidor |
-| `CPANEL_SSH_PORT` | Puerto SSH (22 o 2222 según hosting) |
+| Nombre | Valor | Descripción |
+|---|---|---|
+| `CPANEL_SSH_KEY` | (contenido de `~/.ssh/cpanel_deploy`) | Clave privada SSH |
+| `CPANEL_SSH_USER` | `kbkbsuzc` | Usuario SSH del servidor cPanel |
+| `CPANEL_SSH_HOST` | `patriciomanquepillan.com` | Hostname del servidor |
+| `CPANEL_SSH_PORT` | `54327` | Puerto SSH personalizado |
 
 ### 7. .htaccess
 
