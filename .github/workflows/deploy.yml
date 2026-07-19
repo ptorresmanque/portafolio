@@ -41,7 +41,7 @@ jobs:
         run: test -f dist/portafolio/browser/_htaccess || (echo "::error::_htaccess missing from build output" && exit 1)
 
       - name: Setup SSH key
-        uses: webfactory/ssh-agent@v1
+        uses: webfactory/ssh-agent@v0.10.0
         with:
           ssh-private-key: ${{ secrets.CPANEL_SSH_KEY }}
 
