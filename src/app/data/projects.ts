@@ -11,8 +11,8 @@ export const PROJECTS: Project[] = [
     company: 'Aguas Nuevas S.A.',
     year: '2019 — 2022',
     role: 'Frontend Developer · SCADA Developer (AVEVA) · DBA',
-    image: u('1551288049-bebda4e38f71'),
-    imageAlt: 'Dashboard con gráficos de telemetría en tiempo real',
+    image: '/projects/telemetria.svg',
+    imageAlt: 'HMI estilo AVEVA System Platform mostrando PTAP Iquique: bombas, filtro, estanques con niveles en vivo y panel de alarmas',
     shortDescription:
       'Unificación de la telemetría y los sistemas SCADA del grupo Aguas Nuevas (4 empresas) en una plataforma común con visualización web en tiempo real para 50+ plantas.',
     technologies: [
@@ -52,7 +52,7 @@ Entre los principales logros del proyecto destaco la unificación de las bases d
     title: 'Backstops',
     company: 'Banco Santander España',
     year: '2022 — 2025',
-    role: 'Frontend → Backend Engineer',
+    role: 'Fullstack developer',
     image: u('1611974789855-9c2a0a7236a3'),
     imageAlt: 'Interfaz de plataforma financiera con tablas y métricas',
     shortDescription:
@@ -83,14 +83,14 @@ Mi rol evolucionó de frontend a fullstack a lo largo del proyecto. Inicié desa
     kind: 'work',
     title: 'Comunidad de Madrid',
     company: '— pendiente',
-    year: '2023',
-    role: 'Frontend engineer',
-    image: u('1568992687947-868a78220f0f'),
-    imageAlt: 'Edificio institucional de gobierno',
+    year: '2025 — 2026',
+    role: 'Frontend developer',
+    image: '/projects/comunidad-madrid.png',
+    imageAlt: 'Imagen del proyecto Comunidad de Madrid',
     shortDescription:
       'Portal institucional de la Comunidad de Madrid: buscador de trámites, agenda de eventos y tablón de anuncios accesible para ciudadanos.',
-    technologies: ['Angular', 'SSR', 'WCAG AA', 'Algolia', 'Strapi'],
-    body: `Proyecto licitado para digitalizar la experiencia ciudadana de la Comunidad de Madrid. Trabajé como frontend engineer dentro de un equipo de 12 personas, enfocado en los flujos de búsqueda y descubrimiento de trámites públicos.
+    technologies: ['Angular', 'micro front end', 'capacitor', 'postgresql', 'jenkins', 'mova3 libraries', 'typescript', 'python'],
+    body: `Proyecto licitado para digitalizar la experiencia ciudadana de la Comunidad de Madrid. Trabajé como frontend developer dentro de un equipo de 12 personas, enfocado en los flujos de búsqueda y descubrimiento de trámites públicos.
 
 La restricción de accesibilidad WCAG AA fue la que más marqué el producto: cada componente pasó por revisión con NVDA y VoiceOver antes de mergear. Construí una librería de componentes accesibles (combobox custom, modal con focus trap, navegación con teclado en listados largos) que luego se convirtió en el estándar interno para los siguientes portales del gobierno regional.
 
@@ -101,21 +101,19 @@ Otro pilar fue el SSR con Angular Universal: el portal recibe ~2M de visitas/mes
     kind: 'personal',
     title: 'cualautocompro.cl',
     company: 'Proyecto personal',
-    year: '2024',
-    role: 'Tech lead',
+    year: '2026',
+    role: 'Owner',
     githubUrl: 'https://github.com/ptorresmanque/CualAutoCompro',
     siteUrl: 'https://cualautocompro.cl',
-    image: u('1556742049-0cfed4f6a45d'),
-    imageAlt: 'Tienda online con productos y carrito',
+    image: '/projects/cualautocompro.png',
+    imageAlt: 'Captura del homepage de cualautocompro.cl: hero, comparativa Toyota Corolla vs Mazda CX-5 y sección de features',
     shortDescription:
-      'Comparador de marketplaces chileno: ayuda a decidir dónde comprar un producto cruzando precio, stock y reputación de vendedor.',
-    technologies: ['Angular', 'Next.js', 'Supabase', 'Stripe', 'Playwright'],
-    body: `cualautocompro.cl es un comparador de marketplaces chileno que surgió como side-project y terminó siendo adquirido. Yo fui tech lead desde la concepción.
+      'Catálogo del mercado automotriz chileno: revisar, buscar y comparar modelos de cada marca que se vende en el país, y compartir las comparativas que armes con otros usuarios.',
+    technologies: ['Angular', 'Angular Material', 'Express', 'Prisma', 'MySQL', 'TypeScript', 'Tailwind CSS', 'Playwright'],
+    body: `cualautocompro.cl es mi proyecto personal: una herramienta para analizar el mercado automotriz chileno y ayudar a sus usuarios a elegir la mejor opción al comprar un vehículo nuevo. Permite revisar, buscar y comparar modelos y versiones de todas las marcas que se venden en Chile, y compartir las comparativas que arma cada usuario.
 
-Diseñé la arquitectura headless: Angular para el storefront y Next.js para el blog SEO y la landing principal. Los datos de productos vienen de una capa de scraping propio que corre en workers agendados y se consolidan en Supabase con índices GIN para búsqueda full-text en español.
+Como único responsable técnico, participé en todo el ciclo: modelé el dominio en Prisma sobre MySQL, construí el backend en Express + TypeScript con autenticación vía Passport (Google y Apple), y el frontend en Angular 22 con Angular Material. Diseñé una capa de scraping propio que mantiene el catálogo actualizado y un motor de ranker configurable que pondera versiones según distintos criterios.
 
-La pieza más interesante fue el ranker: cruza precio, tiempo de envío, reputación del vendedor y disponibilidad real. Implementé un sistema de pesos configurable por categoría (una búsqueda de notebooks pondera distinto que una de cepillos de dientes) y un sistema de explicabilidad para que el usuario entienda por qué un resultado ganó.
-
-Después del lanzamiento, el sitio promedió 18k visitas orgánicas mensuales con 6 conversiones diarias hacia los marketplaces afiliados.`,
+Una pieza que disfruté especialmente fue el modelo de comparativas: cada usuario puede armar una comparación de versiones, compartirla con un slug y dejar que otros la consulten o la extiendan. Esto convierte un buen análisis en una entrada de tráfico orgánico para el producto.`,
   },
 ];

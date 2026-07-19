@@ -1,10 +1,10 @@
-import { NgOptimizedImage, SlicePipe } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { Component, computed, input, output } from '@angular/core';
 import { PersonalProject, Project } from '../../models/project';
 
 @Component({
   selector: 'app-project-card',
-  imports: [NgOptimizedImage, SlicePipe],
+  imports: [NgOptimizedImage],
   templateUrl: './project-card.html',
   styleUrl: './project-card.css',
 })
