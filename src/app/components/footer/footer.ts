@@ -15,7 +15,7 @@ export class Footer {
   protected readonly year = new Date().getFullYear();
   protected readonly links: readonly FooterLink[] = [
     { label: 'Email', href: 'mailto:patriciomanquepillantorres@gmail.com', external: false },
-    { label: 'LinkedIn', href: '#', external: true },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/patricio-manquepillan-torres', external: true },
     { label: 'GitHub', href: 'https://github.com/ptorresmanque', external: true },
   ];
 }

@@ -11,13 +11,14 @@ export class About {
   protected readonly stack: readonly string[] = [
     'Angular',
     'TypeScript',
-    'RxJS',
-    'NgRx',
-    'Tailwind',
-    'Next.js',
-    'Node.js',
+    'Spring Boot',
+    'Python',
+    'Kubernetes',
+    'Express',
+    'Prisma',
+    'MySQL',
     'Postgres',
-    'Supabase',
-    'Vitest',
+    'Tailwind',
+    'Astro',
   ];
 }

@@ -14,7 +14,7 @@ export const PROJECTS: Project[] = [
     image: '/projects/telemetria.svg',
     imageAlt: 'HMI estilo AVEVA System Platform mostrando PTAP Iquique: bombas, filtro, estanques con niveles en vivo y panel de alarmas',
     shortDescription:
-      'Unificación de la telemetría y los sistemas SCADA del grupo Aguas Nuevas (4 empresas) en una plataforma común con visualización web en tiempo real para 50+ plantas.',
+      'Unifiqué la telemetría y los SCADA de las 4 empresas del grupo Aguas Nuevas en una sola plataforma web, con datos en vivo de 50+ plantas.',
     technologies: [
       'AVEVA System Platform',
       'Oracle SQL',
@@ -58,11 +58,11 @@ Entre los principales logros del proyecto destaco la unificación de las bases d
     shortDescription:
       'Sistema de gestión automatizada de backstops crediticios para el área de Capital, desarrollado en el marco de una iniciativa conjunta con la Unión Europea.',
     technologies: ['Angular', 'Java', 'Spring Boot', 'Kubernetes', 'Git'],
-    body: `Backstops es el sistema de gestión automatizada de backstops crediticios que desarrollé como parte del equipo de NTT Data España asignado al área de Capital de Banco Santander España, en el marco de una iniciativa conjunta del banco con la Unión Europea. Trabajé en este proyecto entre abril de 2022 y abril de 2025 bajo el liderazgo técnico de Tiago Joel Da Silva Monteiro (Senior Technical Lead en NTT Data España).
+    body: `Backstops es un sistema de gestión automatizada de backstops crediticios que desarrollé en NTT Data España, asignado al área de Capital de Banco Santander, dentro de una iniciativa del banco con la Unión Europea. Estuve en el proyecto entre abril de 2022 y abril de 2025, bajo el liderazgo técnico de Tiago Joel Da Silva Monteiro.
 
-El producto centraliza las políticas de cobertura crediticia del banco: motor de reglas configurable, scoring de operaciones, integración con los sistemas internos del área de Capital y un módulo de reporting regulatorio que automatizaba la generación de reportes que antes se elaboraban de forma manual.
+El producto centraliza las políticas de cobertura crediticia: motor de reglas configurable, scoring de operaciones, integración con los sistemas internos del banco y un módulo de reporting regulatorio que automatiza reportes que antes se hacían a mano.
 
-Mi rol evolucionó de frontend a fullstack a lo largo del proyecto. Inicié desarrollando las interfaces de configuración y monitoreo en Angular y, con el tiempo, fui asumiendo responsabilidades backend en Java y Spring Boot hasta llegar a gestionar y desplegar servicios de forma autónoma. La plataforma se ejecutaba sobre un clúster de Kubernetes, lo que permitía escalar automáticamente los workers de ingestión de datos, los microservicios de cálculo y las APIs internas del área según la carga operativa, con despliegues sin downtime.`,
+Mi rol pasó de frontend a fullstack. Empecé con las interfaces de configuración y monitoreo en Angular y, con el tiempo, asumí backend en Java y Spring Boot hasta gestionar y desplegar servicios por mi cuenta. La plataforma corría sobre Kubernetes, lo que permitía escalar los workers de ingestión, los microservicios de cálculo y las APIs internas según la carga, sin downtime.`,
     letter: {
       paragraphs: [
         'Por medio de la presente, yo Tiago Joel Da Silva Monteiro, Senior Technical Lead en NTT Data España, me permito emitir esta carta de referencia profesional a favor del Sr. Patricio Emanuel Manquepillan Torres, con quien colaboré como parte del equipo de NTT Data España asignado al área de Capital de Banco Santander España, entre abril de 2022 y abril de 2025.',
@@ -82,7 +82,7 @@ Mi rol evolucionó de frontend a fullstack a lo largo del proyecto. Inicié desa
     id: 'comunidad-madrid',
     kind: 'work',
     title: 'Comunidad de Madrid',
-    company: '— pendiente',
+    company: 'Comunidad de Madrid',
     year: '2025 — 2026',
     role: 'Frontend developer',
     image: '/projects/comunidad-madrid.png',
@@ -90,11 +90,11 @@ Mi rol evolucionó de frontend a fullstack a lo largo del proyecto. Inicié desa
     shortDescription:
       'Portal institucional de la Comunidad de Madrid: buscador de trámites, agenda de eventos y tablón de anuncios accesible para ciudadanos.',
     technologies: ['Angular', 'micro front end', 'capacitor', 'postgresql', 'jenkins', 'mova3 libraries', 'typescript', 'python'],
-    body: `Proyecto licitado para digitalizar la experiencia ciudadana de la Comunidad de Madrid. Trabajé como frontend developer dentro de un equipo de 12 personas, enfocado en los flujos de búsqueda y descubrimiento de trámites públicos.
+    body: `Proyecto licitado para digitalizar la experiencia ciudadana de la Comunidad de Madrid. Fui frontend developer en un equipo de 12 personas, centrado en los flujos de búsqueda y descubrimiento de trámites públicos.
 
-La restricción de accesibilidad WCAG AA fue la que más marqué el producto: cada componente pasó por revisión con NVDA y VoiceOver antes de mergear. Construí una librería de componentes accesibles (combobox custom, modal con focus trap, navegación con teclado en listados largos) que luego se convirtió en el estándar interno para los siguientes portales del gobierno regional.
+La accesibilidad WCAG AA fue lo que más marcó el producto. Cada componente pasaba por revisión con NVDA y VoiceOver antes de mergear. Construí una librería accesible (combobox custom, modal con focus trap, navegación por teclado en listados largos) que después se convirtió en el estándar interno para los siguientes portales del gobierno regional.
 
-Otro pilar fue el SSR con Angular Universal: el portal recibe ~2M de visitas/mes y un TTFB sub-200ms era no negociable. Optimicé el caching de cabeceras, lazy-loading por ruta y pre-rendering de los 200 trámites más consultados.`,
+El otro pilar fue el SSR con Angular Universal: el portal recibe cerca de 2M de visitas al mes y necesitábamos TTFB bajo 200 ms. Optimicé el caching de cabeceras, el lazy-loading por ruta y el pre-rendering de los 200 trámites más consultados.`,
   },
   {
     id: 'cualautocompro-cl',
@@ -108,12 +108,12 @@ Otro pilar fue el SSR con Angular Universal: el portal recibe ~2M de visitas/mes
     image: '/projects/cualautocompro.png',
     imageAlt: 'Captura del homepage de cualautocompro.cl: hero, comparativa Toyota Corolla vs Mazda CX-5 y sección de features',
     shortDescription:
-      'Catálogo del mercado automotriz chileno: revisar, buscar y comparar modelos de cada marca que se vende en el país, y compartir las comparativas que armes con otros usuarios.',
+      'Catálogo del mercado automotriz chileno. Puedes revisar, buscar y comparar modelos de todas las marcas que se venden en Chile, y compartir las comparativas que armes con otros usuarios.',
     technologies: ['Angular', 'Angular Material', 'Express', 'Prisma', 'MySQL', 'TypeScript', 'Tailwind CSS', 'Playwright'],
-    body: `cualautocompro.cl es mi proyecto personal: una herramienta para analizar el mercado automotriz chileno y ayudar a sus usuarios a elegir la mejor opción al comprar un vehículo nuevo. Permite revisar, buscar y comparar modelos y versiones de todas las marcas que se venden en Chile, y compartir las comparativas que arma cada usuario.
+    body: `cualautocompro.cl es mi proyecto personal. Una herramienta para analizar el mercado automotriz chileno y ayudar a quien va a comprar un vehículo a elegir mejor. Permite revisar, buscar y comparar modelos y versiones de todas las marcas que se venden en Chile, y compartir comparativas con otros usuarios.
 
-Como único responsable técnico, participé en todo el ciclo: modelé el dominio en Prisma sobre MySQL, construí el backend en Express + TypeScript con autenticación vía Passport (Google y Apple), y el frontend en Angular 22 con Angular Material. Diseñé una capa de scraping propio que mantiene el catálogo actualizado y un motor de ranker configurable que pondera versiones según distintos criterios.
+Como único responsable técnico, participé en todo el ciclo: modelé el dominio en Prisma sobre MySQL, construí el backend en Express + TypeScript con autenticación vía Passport (Google y Apple), y el frontend en Angular 22 con Angular Material. Diseñé una capa de scraping propio que mantiene el catálogo al día y un motor de ranker configurable para ponderar versiones según distintos criterios.
 
-Una pieza que disfruté especialmente fue el modelo de comparativas: cada usuario puede armar una comparación de versiones, compartirla con un slug y dejar que otros la consulten o la extiendan. Esto convierte un buen análisis en una entrada de tráfico orgánico para el producto.`,
+Lo que más disfruté fue el modelo de comparativas. Cada usuario arma su comparación, la comparte con un slug, y otros pueden consultarla o extenderla. Un buen análisis se convierte, de paso, en tráfico orgánico para el producto.`,
   },
 ];
