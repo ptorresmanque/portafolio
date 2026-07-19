@@ -4,22 +4,17 @@
 >
   <div class="mx-auto grid max-w-6xl gap-12 px-6 md:grid-cols-[1fr_2fr] md:gap-16">
     <div>
-      <p class="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-accent">Sobre mí</p>
+      <p class="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-accent">{{ 'about.eyebrow' | t }}</p>
       <h2 class="text-display text-3xl text-foreground md:text-4xl">
-        Producto, equipo y código limpio.
+        {{ 'about.title' | t }}
       </h2>
     </div>
 
     <div class="space-y-5 text-base leading-relaxed text-secondary md:text-lg">
-      <p>
-        Llevo {{ yearsOfExperience }} años en producción, con cientos de usuarios en los productos donde he trabajado. Empecé unificando los SCADA de cuatro sanitarias chilenas, después me fui al área de Capital de Banco Santander a automatizar backstops crediticios en Java y Spring Boot sobre Kubernetes, y ahora estoy en un portal institucional con WCAG AA estricto. En mis tiempos libres armo cualautocompro.cl, un comparador del mercado automotriz chileno.
-      </p>
-      <p>
-        Me obsesionan dos cosas y media. Que la UI se sienta bien al usarla. Que el código envejezca bien. Y que las decisiones técnicas queden justificadas para el siguiente que las lea.
-      </p>
-      <p>
-        Hoy trabajo como frontend lead en proyectos de Angular. Cuando hace falta, me meto en backend sin drama.
-      </p>
+      <p>{{ 'about.paragraph1' | t:{years: yearsText()} }}</p>
+      <p>{{ 'about.paragraph2' | t }}</p>
+      <p class="text-foreground">{{ 'about.now' | t }}</p>
+      <p>{{ 'about.paragraph3' | t }}</p>
 
       <div class="flex flex-wrap gap-2 pt-4">
         @for (tech of stack; track tech) {
