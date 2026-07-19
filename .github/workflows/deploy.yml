@@ -41,61 +41,26 @@ jobs:
       - name: Verify _htaccess is in build output
         run: test -f dist/portafolio/browser/_htaccess || (echo "::error::_htaccess missing from build output" && exit 1)
 
-      - name: Setup SSH agent with passphrase
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.CPANEL_SSH_KEY }}
-          SSH_KEY_PASSPHRASE: ${{ secrets.CPANEL_SSH_KEY_PASSPHRASE }}
-        run: |
-          mkdir -p ~/.ssh
-          chmod 700 ~/.ssh
-
-          # Start ssh-agent and persist its env to subsequent steps
-          eval "$(ssh-agent -s)"
-          {
-            echo "SSH_AUTH_SOCK=${SSH_AUTH_SOCK}"
-            echo "SSH_AGENT_PID=${SSH_AGENT_PID}"
-          } >> "$GITHUB_ENV"
-
-          # Materialize the private key as a restricted file
-          KEY_FILE="$(mktemp)"
-          chmod 600 "$KEY_FILE"
-          printf '%s\n' "$SSH_PRIVATE_KEY" > "$KEY_FILE"
-
-          # Askpass script: prints the passphrase when invoked by ssh-add
-          ASKPASS="$(mktemp)"
-          chmod 700 "$ASKPASS"
-          printf '%s\n%s\n' '#!/bin/sh' 'printf "%s\n" "$SSH_KEY_PASSPHRASE"' > "$ASKPASS"
-
-          # Add the key non-interactively (SSH_ASKPASS forces use of our helper)
-          DISPLAY=:0 \
-            SSH_ASKPASS="$ASKPASS" \
-            SSH_ASKPASS_REQUIRE=force \
-            ssh-add "$KEY_FILE" < /dev/null
-
-          ssh-add -l
-          rm -f "$KEY_FILE" "$ASKPASS"
-
-      - name: Add host to known_hosts
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -p "${{ secrets.CPANEL_SSH_PORT }}" \
-            -H "${{ secrets.CPANEL_SSH_HOST }}" >> ~/.ssh/known_hosts
-
-      - name: Clean staging on server
-        run: |
-          ssh -p "${{ secrets.CPANEL_SSH_PORT }}" \
-            "${{ secrets.CPANEL_SSH_USER }}@${{ secrets.CPANEL_SSH_HOST }}" \
-            "rm -rf ~/public_html_new && mkdir -p ~/public_html_new"
-
-      - name: Sync to staging on server
-        run: |
-          scp -P "${{ secrets.CPANEL_SSH_PORT }}" -r \
-            dist/portafolio/browser/. \
-            "${{ secrets.CPANEL_SSH_USER }}@${{ secrets.CPANEL_SSH_HOST }}:public_html_new/"
+      - name: Clean staging and sync build
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.CPANEL_SSH_HOST }}
+          username: ${{ secrets.CPANEL_SSH_USER }}
+          port: ${{ secrets.CPANEL_SSH_PORT }}
+          key: ${{ secrets.CPANEL_SSH_KEY }}
+          passphrase: ${{ secrets.CPANEL_SSH_KEY_PASSPHRASE }}
+          command: rm -rf ~/public_html_new && mkdir -p ~/public_html_new && tar -xzf - -C ~/public_html_new
+          script: tar -czf - -C dist/portafolio/browser .
 
       - name: Atomic swap and prune
-        run: |
-          ssh -p "${{ secrets.CPANEL_SSH_PORT }}" \
-            "${{ secrets.CPANEL_SSH_USER }}@${{ secrets.CPANEL_SSH_HOST }}" \
-            "RELEASES_TO_KEEP='${{ env.RELEASES_TO_KEEP }}' bash -s" \
-            < .github/scripts/deploy.sh
+        uses: appleboy/ssh-action@v1
+        env:
+          RELEASES_TO_KEEP: ${{ env.RELEASES_TO_KEEP }}
+        with:
+          host: ${{ secrets.CPANEL_SSH_HOST }}
+          username: ${{ secrets.CPANEL_SSH_USER }}
+          port: ${{ secrets.CPANEL_SSH_PORT }}
+          key: ${{ secrets.CPANEL_SSH_KEY }}
+          passphrase: ${{ secrets.CPANEL_SSH_KEY_PASSPHRASE }}
+          envs: RELEASES_TO_KEEP
+          script_path: .github/scripts/deploy.sh

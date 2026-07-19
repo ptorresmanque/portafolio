@@ -7,12 +7,9 @@ This document explains how the CI/CD pipeline is configured and how to operate i
 Every push to `main` triggers a GitHub Actions workflow that:
 
 1. Builds the Angular app with Node 22 (`npm ci` + `npm run build`)
-2. Cleans the staging directory and transfers the static output via `scp` over SSH to `~/public_html_new/` on the server
-3. Runs a remote script that:
-   - Renames `_htaccess` to `.htaccess` in the staging directory
-   - Archives the current `~/public_html/` into `~/releases/<UTC-ISO-timestamp>/`
-   - Promotes `~/public_html_new/` to `~/public_html/`
-   - Prunes old releases, keeping the most recent 3
+2. Cleans the staging directory and transfers the static output as a `tar` archive piped through SSH to `~/public_html_new/` on the server
+3. Runs the swap script (`.github/scripts/deploy.sh`) on the server to atomically promote the staging directory to live
+3. (The swap script in step 2 handles the rest: renames `_htaccess` to `.htaccess`, archives the previous `~/public_html/` into `~/releases/<UTC-ISO-timestamp>/`, promotes `~/public_html_new/` to `~/public_html/`, and prunes old releases keeping the most recent 3.)
 
 > **Important:** Each deploy replaces the entire `~/public_html/` directory. Files uploaded manually through cPanel File Manager or another channel—including `cgi-bin/` and `.well-known/acme-challenge/`—will be deleted from the live site. This pipeline assumes `public_html` contains only the generated Angular build, consistent with the earlier confirmation that it is currently empty. Persistent files must live elsewhere or be included in the build.
 
@@ -42,7 +39,7 @@ If `~/.ssh/cpanel_deploy` has a passphrase, run this to retrieve it (the passphr
 ssh-keygen -y -f ~/.ssh/cpanel_deploy   # asks for passphrase; if it asks, one exists
 ```
 
-Store that passphrase as the `CPANEL_SSH_KEY_PASSPHRASE` secret. The workflow uses `SSH_ASKPASS` to unlock the key non-interactively inside the runner.
+Store that passphrase as the `CPANEL_SSH_KEY_PASSPHRASE` secret. The workflow uses [`appleboy/ssh-action@v1`](https://github.com/appleboy/ssh-action), which accepts a `passphrase:` input and unlocks the key internally — no ssh-agent or SSH_ASKPASS tricks required.
 
 > **If you change the passphrase later**, update the `CPANEL_SSH_KEY_PASSPHRASE` secret to match. The private key file (`CPANEL_SSH_KEY`) does not change.
 
@@ -94,17 +91,16 @@ mv ~/releases/<target-timestamp> ~/public_html
 
 Before the first deploy can succeed, the server must already meet these requirements. These are server-side prerequisites (already in place on standard cPanel Linux hosts), not GitHub-side:
 
-- `bash`, `flock` and `lslocks` (from `util-linux`), `find` (GNU), and `date` (GNU) must be available on the server's `$PATH`.
-- `scp` (from OpenSSH) must be available — it is installed alongside `ssh` on virtually every Linux host.
+- `bash`, `flock` and `lslocks` (from `util-linux`), `find` (GNU), `date` (GNU), and `tar` (GNU) must be available on the server's `$PATH`.
 - The public key corresponding to `~/.ssh/cpanel_deploy` (the private key pasted into the `CPANEL_SSH_KEY` GitHub Secret) must be listed in `~/.ssh/authorized_keys` on the server.
 
-> **Why not `rsync`?** The pipeline uses `scp` instead of `rsync` because `rsync` is not installed on this hosting account and cPanel users cannot install system packages. `scp` transfers the full build on every deploy — fine for a portfolio site (~200KB) and avoids the host-side dependency.
+> **Why not `rsync` / `scp`?** The pipeline uses a `tar` archive piped over SSH instead of `rsync` or `scp`. `rsync` is not installed on this hosting account and cPanel users cannot install system packages; using `tar` (always present) avoids the host-side dependency. The full build is transferred on every deploy — fine for a portfolio site (~200KB).
 
 Verify on the server before the first deploy:
 
 ```bash
 # On the server, check these are available:
-which bash scp ssh flock lslocks find date
+which bash ssh tar flock lslocks find date
 
 # Confirm the public key for cpanel_deploy is listed here:
 cat ~/.ssh/authorized_keys
@@ -119,24 +115,25 @@ If `~/public_html` does not exist yet, the first deploy will create it via the s
 
 ## Troubleshooting
 
-### Workflow fails at "Setup SSH agent with passphrase"
+### Workflow fails at "Clean staging and sync build" or "Atomic swap and prune"
 
-- **`ssh-add` still prompts**: confirms `CPANEL_SSH_KEY_PASSPHRASE` is missing or wrong. Confirm the secret exists with the exact passphrase (including any spaces or special characters).
-- **`Bad passphrase` / `Permission denied (publickey)` further down**: the key was loaded but ssh-add rejected the passphrase. Re-check the secret value.
-- **`Load key "...": invalid format`**: the private key in `CPANEL_SSH_KEY` is corrupted (extra/missing newline, truncated). Re-paste the full contents of `~/.ssh/cpanel_deploy`.
-- Confirm the `CPANEL_SSH_KEY` secret contains the full private key, including header/footer lines.
-- Confirm the public key corresponding to `~/.ssh/cpanel_deploy` is listed in `~/.ssh/authorized_keys` on the server.
-
-### Workflow fails at "Add host to known_hosts"
-
-- Verify `CPANEL_SSH_HOST` and `CPANEL_SSH_PORT` are correct.
-- Try connecting manually: `ssh -p 54327 kbkbsuzc@patriciomanquepillan.com`.
-
-### Workflow fails at "Clean staging on server" or "Sync to staging on server"
-
-- The existence of `~/.deploy.lock` is harmless when no deploy holds it; the lock is attached to an open file descriptor, not to the file's existence. Do not delete it. If a deploy appears hung, use `lslocks | grep .deploy.lock` to check whether a process currently holds the lock.
-- Staging `~/public_html_new/` is wiped and repopulated on every deploy (`rm -rf` then `scp`), so stale staging left by a failed deploy is overwritten on the next successful run.
+- **`Permission denied (publickey)`**: confirms `CPANEL_SSH_USER`, `CPANEL_SSH_HOST`, or `CPANEL_SSH_PORT` is wrong, or the public key for `CPANEL_SSH_KEY` is not in `~/.ssh/authorized_keys` on the server. Verify with `ssh -p 54327 kbkbsuzc@patriciomanquepillan.com` from your workstation.
+- **`Load key "...": invalid format`** or **`not a valid key`**: the private key in `CPANEL_SSH_KEY` is corrupted (extra/missing newline, truncated). Re-paste the full contents of `~/.ssh/cpanel_deploy`, including header/footer lines.
+- **`incorrect passphrase supplied to decrypt private key`**: `CPANEL_SSH_KEY_PASSPHRASE` does not match the actual passphrase. Re-check; remember it's case-sensitive.
+- **Connection hangs / times out**: the server's firewall may be blocking GitHub Actions runner IPs. Confirm the server is reachable from your workstation first.
+- **The existence of `~/.deploy.lock` is harmless when no deploy holds it**; the lock is attached to an open file descriptor, not the file's existence. Do not delete it. If a deploy appears hung, use `lslocks | grep .deploy.lock` to check whether a process currently holds the lock.
+- **Staging `~/public_html_new/` is wiped and repopulated on every deploy**, so stale staging left by a failed deploy is overwritten on the next successful run.
 - Verify disk space: `df -h ~`.
+
+### Host key verification (optional hardening)
+
+The pipeline currently relies on `appleboy/ssh-action`'s default host key behavior (it skips verification). To harden against MITM on the first connection, set the `fingerprint:` parameter in the workflow's ssh-action steps to the server's `SHA256:...` fingerprint and store it as a `CPANEL_SSH_FINGERPRINT` secret. Get the fingerprint once with:
+
+```bash
+ssh-keyscan -t ed25519 -p 54327 patriciomanquepillan.com 2>/dev/null | ssh-keygen -lf -
+```
+
+The output includes the fingerprint, e.g. `256 SHA256:abc123... user@host (ED25519)` — copy the `SHA256:abc123...` value.
 
 ### Site shows the old version after deploy
 
