@@ -1,15 +1,15 @@
+<a
+  href="#main"
+  class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-foreground focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-background"
+>
+  {{ 'skipLink' | t }}
+</a>
 <app-header />
-<main>
+<main id="main" tabindex="-1">
   <app-hero />
   <app-about />
-  <app-projects-section
-    [projects]="projects"
-    (openDialog)="openDialog($event)"
-  />
+  <app-projects-section [projects]="projects" (openDialog)="openDialog($event)" />
 </main>
 <app-footer />
 
-<app-project-dialog
-  [project]="dialogProject()"
-  (closeDialog)="closeDialog()"
-/>
+<app-project-dialog [project]="dialogProject()" (closeDialog)="closeDialog()" />

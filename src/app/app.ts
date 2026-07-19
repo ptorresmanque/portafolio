@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { About } from './components/about/about';
 import { Footer } from './components/footer/footer';
 import { Header } from './components/header/header';
@@ -6,22 +6,18 @@ import { Hero } from './components/hero/hero';
 import { ProjectDialog } from './components/project-dialog/project-dialog';
 import { ProjectsSection } from './components/projects-section/projects-section';
 import { PROJECTS } from './data/projects';
+import { TranslationPipe } from './i18n/translation.pipe';
+import { TranslationService } from './i18n/translation.service';
 import { Project } from './models/project';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    Header,
-    Hero,
-    About,
-    ProjectsSection,
-    ProjectDialog,
-    Footer,
-  ],
+  imports: [Header, Hero, About, ProjectsSection, ProjectDialog, Footer, TranslationPipe],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
 export class App {
+  protected readonly translation = inject(TranslationService);
   readonly projects = PROJECTS;
   readonly dialogProject = signal<Project | null>(null);
 
