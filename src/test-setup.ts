@@ -20,27 +20,35 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-const memory: Storage = {
-  _data: new Map<string, string>(),
-  get length() {
-    return this._data.size;
-  },
-  clear() {
-    this._data.clear();
-  },
+class MemoryStorage implements Storage {
+  private readonly store = new Map<string, string>();
+
+  get length(): number {
+    return this.store.size;
+  }
+
+  clear(): void {
+    this.store.clear();
+  }
+
   getItem(key: string): string | null {
-    return this._data.has(key) ? this._data.get(key)! : null;
-  },
+    return this.store.get(key) ?? null;
+  }
+
   key(index: number): string | null {
-    return Array.from(this._data.keys())[index] ?? null;
-  },
+    return Array.from(this.store.keys())[index] ?? null;
+  }
+
   removeItem(key: string): void {
-    this._data.delete(key);
-  },
+    this.store.delete(key);
+  }
+
   setItem(key: string, value: string): void {
-    this._data.set(key, String(value));
-  },
-};
+    this.store.set(key, String(value));
+  }
+}
+
+const memory = new MemoryStorage();
 
 Object.defineProperty(globalThis, 'localStorage', {
   configurable: true,
