@@ -51,3 +51,6 @@ Thumbs.db
 /public/web-app-manifest-*.png
 /public/site.webmanifest
 /public/_favicon-markup.html
+
+# Agent scratch space (SDD progress, task briefs/reports)
+/.superpowers/
