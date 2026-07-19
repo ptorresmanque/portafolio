@@ -4,18 +4,21 @@
 >
   <div class="inline-flex items-center gap-2 rounded-full border border-border bg-background/60 px-3 py-1 text-xs text-secondary backdrop-blur">
     <span class="inline-block size-1.5 rounded-full bg-accent"></span>
-    Disponible para nuevos proyectos
+    {{ 'hero.badge' | t }}
   </div>
 
   <h1 class="text-display mt-6 text-[clamp(3rem,9vw,7.5rem)] text-foreground">
-    Construyo productos<br />
-    <span class="text-accent">que la gente</span><br />
-    usa todos los días.
+    {{ 'hero.title.line1' | t }}<br />
+    <span class="text-accent">{{ 'hero.title.highlight' | t }}</span><br />
+    {{ 'hero.title.line2' | t }}
   </h1>
 
   <p class="mt-8 max-w-xl text-lg leading-relaxed text-secondary md:text-xl">
-    Soy Patricio Manquepillan, desarrollador frontend con foco en Angular y TypeScript.
-    Estos son los productos en los que más he crecido en los últimos años — cada uno con su historia y su responsable firmando lo que aprendí ahí.
+    {{ 'hero.subtitle' | t }}
+  </p>
+
+  <p class="mt-4 max-w-xl text-sm font-medium text-foreground/80 md:text-base">
+    {{ 'hero.credentials' | t }}
   </p>
 
   <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -23,16 +26,23 @@
       href="#proyectos"
       class="inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition-transform hover:scale-[1.02] hover:bg-accent"
     >
-      Ver proyectos
+      {{ 'hero.cta.projects' | t }}
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M5 12h14M13 5l7 7-7 7" />
       </svg>
     </a>
     <a
-      href="mailto:tu@email.com"
+      href="/cv-es.pdf"
+      download
       class="inline-flex items-center justify-center rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-foreground"
     >
-      Escríbeme
+      {{ 'hero.cta.cv' | t }}
+    </a>
+    <a
+      [href]="'mailto:' + ('nav.email' | t)"
+      class="inline-flex items-center justify-center text-sm font-medium text-secondary underline-offset-4 transition-colors hover:text-foreground hover:underline sm:ml-2"
+    >
+      {{ 'hero.cta.contact' | t }}
     </a>
   </div>
 </section>
