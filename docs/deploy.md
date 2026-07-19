@@ -52,21 +52,43 @@ Copy the entire output (including the `-----BEGIN OPENSSH PRIVATE KEY-----` and 
 
 ## Rollback
 
-SSH into the server and run:
+SSH into the server and run a safe four-step procedure. The key safety property: **verify the target release exists BEFORE moving the current live out of the way**, so a typo can't leave `public_html` absent.
 
 ```bash
-cd ~
-mv public_html "releases/broken-$(date -u +%Y-%m-%dT%H-%M-%S)"
-mv releases/<previous-timestamp> public_html
+# 1. List available releases (oldest to newest)
+ls -1 ~/releases
+
+# 2. Verify the target release exists BEFORE moving anything
+ls -d ~/releases/<target-timestamp>  # must succeed
+
+# 3. Move current live out of the way
+mv ~/public_html ~/releases/broken-$(date -u +%Y-%m-%dT%H-%M-%S)
+
+# 4. Restore the target release
+mv ~/releases/<target-timestamp> ~/public_html
 ```
 
-For example:
+`<target-timestamp>` is the directory name from step 1 you want to restore (for example `2026-07-19T10-30-45`). Step 2 is the safety check — if the directory doesn't exist, fix the name and re-check rather than running step 3.
+
+## Server prerequisites
+
+Before the first deploy can succeed, the server must already meet these requirements. These are server-side prerequisites (already in place on standard cPanel Linux hosts), not GitHub-side:
+
+- `bash`, `rsync`, `flock` (from `util-linux`), `find` (GNU), `date` (GNU), and `mktemp` must be available on the server's `$PATH`.
+- The public key corresponding to `~/.ssh/cpanel_deploy` (the private key pasted into the `CPANEL_SSH_KEY` GitHub Secret) must be listed in `~/.ssh/authorized_keys` on the server.
+
+Verify on the server before the first deploy:
 
 ```bash
-mv releases/2026-07-19T10-30-45 public_html
-```
+# On the server, check these are available:
+which bash rsync flock find date mktemp
 
-Replace `<previous-timestamp>` with the name of the directory in `~/releases/` you want to restore.
+# Confirm the public key for cpanel_deploy is listed here:
+cat ~/.ssh/authorized_keys
+
+# Local fingerprint (run on your workstation) should match a public key on the server:
+ssh-keygen -l -f ~/.ssh/cpanel_deploy.pub
+```
 
 ## First-time setup on a fresh server
 
@@ -77,7 +99,7 @@ If `~/public_html` does not exist yet, the first deploy will create it via the s
 ### Workflow fails at "Setup SSH key"
 
 - Confirm the `CPANEL_SSH_KEY` secret contains the full private key, including header/footer lines.
-- Confirm the corresponding public key is in `~/.ssh/authorized_keys` on the server (named `cpanel_deploy`).
+- Confirm the public key corresponding to `~/.ssh/cpanel_deploy` is listed in `~/.ssh/authorized_keys` on the server.
 
 ### Workflow fails at "Add host to known_hosts"
 
@@ -86,7 +108,8 @@ If `~/public_html` does not exist yet, the first deploy will create it via the s
 
 ### Workflow fails at "Sync to staging on server"
 
-- Check that `~/public_html_new` is writable and not locked from a previous failed deploy (if so, delete it on the server and retry).
+- If a deploy fails partway, the lock `~/.deploy.lock` may remain held. Remove it on the server: `rm -f ~/.deploy.lock` (only safe if no deploy is actually running — check `ps aux | grep deploy.sh`).
+- Staging `~/public_html_new/` is **not** reused per deploy — `rsync --delete` cleans it before populating, so a stale staging should not cause issues.
 - Verify disk space: `df -h ~`.
 
 ### Site shows the old version after deploy
