@@ -45,9 +45,10 @@ mv "$STAGING" "$LIVE"
 log "promoted staging -> public_html"
 
 cd "$RELEASES_DIR"
-COUNT=$(find . -maxdepth 1 -mindepth 1 -type d | wc -l | tr -d ' ')
+# broken-* rollback directories are excluded and left for manual cleanup.
+COUNT=$(find . -maxdepth 1 -mindepth 1 -type d -regex './[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}T[0-9]\{2\}-[0-9]\{2\}-[0-9]\{2\}' | wc -l | tr -d ' ')
 if [ "$COUNT" -gt "$KEEP" ]; then
-  REMOVE=$(find . -maxdepth 1 -mindepth 1 -type d -printf '%T@ %p\n' | sort -n | head -n -"$KEEP" | awk '{print $2}')
+  REMOVE=$(find . -maxdepth 1 -mindepth 1 -type d -regex './[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}T[0-9]\{2\}-[0-9]\{2\}-[0-9]\{2\}' -printf '%T@ %p\n' | sort -n | head -n -"$KEEP" | awk '{print $2}')
   for d in $REMOVE; do
     log "pruning release: $d"
     rm -rf -- "$d"
