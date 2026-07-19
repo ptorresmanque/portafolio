@@ -19,8 +19,7 @@ Configure in **Settings → Secrets and variables → Actions → New repository
 
 | Name | Value |
 |---|---|
-| `CPANEL_SSH_KEY` | Full contents of `~/.ssh/cpanel_deploy` (the private key) |
-| `CPANEL_SSH_KEY_PASSPHRASE` | The passphrase of that private key (if any) |
+| `CPANEL_SSH_KEY` | Full contents of `~/.ssh/cpanel_deploy` (the private key) — **must have an empty passphrase** |
 | `CPANEL_SSH_USER` | `kbkbsuzc` |
 | `CPANEL_SSH_HOST` | `patriciomanquepillan.com` |
 | `CPANEL_SSH_PORT` | `54327` |
@@ -33,15 +32,14 @@ cat ~/.ssh/cpanel_deploy
 
 Copy the entire output (including the `-----BEGIN OPENSSH PRIVATE KEY-----` and `-----END OPENSSH PRIVATE KEY-----` lines) into the `CPANEL_SSH_KEY` secret value.
 
-If `~/.ssh/cpanel_deploy` has a passphrase, run this to retrieve it (the passphrase you type to unlock the key is **not** stored anywhere — you need to remember it):
-
-```bash
-ssh-keygen -y -f ~/.ssh/cpanel_deploy   # asks for passphrase; if it asks, one exists
-```
-
-Store that passphrase as the `CPANEL_SSH_KEY_PASSPHRASE` secret. The workflow uses [`appleboy/ssh-action@v1`](https://github.com/appleboy/ssh-action), which accepts a `passphrase:` input and unlocks the key internally — no ssh-agent or SSH_ASKPASS tricks required.
-
-> **If you change the passphrase later**, update the `CPANEL_SSH_KEY_PASSPHRASE` secret to match. The private key file (`CPANEL_SSH_KEY`) does not change.
+> **The private key must not have a passphrase.** The workflow invokes `ssh` and `appleboy/ssh-action` with `BatchMode=yes` and no passphrase — a passphrase-protected key would fail. To remove the passphrase from your local key (without regenerating it, so the public key and the server's `authorized_keys` stay unchanged):
+>
+> ```bash
+> ssh-keygen -p -f ~/.ssh/cpanel_deploy
+> # Enter current passphrase, then press Enter twice for the new (empty) passphrase
+> ```
+>
+> Then re-paste the updated key contents into the `CPANEL_SSH_KEY` secret.
 
 ## Triggering a manual deploy
 
@@ -115,11 +113,10 @@ If `~/public_html` does not exist yet, the first deploy will create it via the s
 
 ## Troubleshooting
 
-### Workflow fails at "Clean staging and sync build" or "Atomic swap and prune"
+### Workflow fails at "Clean staging on server", "Sync build to staging", or "Atomic swap and prune"
 
 - **`Permission denied (publickey)`**: confirms `CPANEL_SSH_USER`, `CPANEL_SSH_HOST`, or `CPANEL_SSH_PORT` is wrong, or the public key for `CPANEL_SSH_KEY` is not in `~/.ssh/authorized_keys` on the server. Verify with `ssh -p 54327 kbkbsuzc@patriciomanquepillan.com` from your workstation.
 - **`Load key "...": invalid format`** or **`not a valid key`**: the private key in `CPANEL_SSH_KEY` is corrupted (extra/missing newline, truncated). Re-paste the full contents of `~/.ssh/cpanel_deploy`, including header/footer lines.
-- **`incorrect passphrase supplied to decrypt private key`**: `CPANEL_SSH_KEY_PASSPHRASE` does not match the actual passphrase. Re-check; remember it's case-sensitive.
 - **Connection hangs / times out**: the server's firewall may be blocking GitHub Actions runner IPs. Confirm the server is reachable from your workstation first.
 - **The existence of `~/.deploy.lock` is harmless when no deploy holds it**; the lock is attached to an open file descriptor, not the file's existence. Do not delete it. If a deploy appears hung, use `lslocks | grep .deploy.lock` to check whether a process currently holds the lock.
 - **Staging `~/public_html_new/` is wiped and repopulated on every deploy**, so stale staging left by a failed deploy is overwritten on the next successful run.
