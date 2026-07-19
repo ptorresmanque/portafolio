@@ -22,7 +22,7 @@
         </div>
         <button
           type="button"
-          (click)="closeDialog.emit()"
+          (click)="handleClose()"
           class="inline-flex size-10 items-center justify-center rounded-full border border-border text-foreground transition-colors hover:bg-muted"
           [attr.aria-label]="closeAriaLabel(p.title)"
         >

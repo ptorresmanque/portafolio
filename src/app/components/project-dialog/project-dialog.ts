@@ -68,7 +68,7 @@ export class ProjectDialog {
     this.handleClose();
   }
 
-  protected handleClose(): void {
+  handleClose(): void {
     this.closeDialog.emit();
   }
 }
