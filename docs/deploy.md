@@ -7,7 +7,7 @@ This document explains how the CI/CD pipeline is configured and how to operate i
 Every push to `main` triggers a GitHub Actions workflow that:
 
 1. Builds the Angular app with Node 22 (`npm ci` + `npm run build`)
-2. Transfers the static output via rsync over SSH to `~/public_html_new/` on the server
+2. Cleans the staging directory and transfers the static output via `scp` over SSH to `~/public_html_new/` on the server
 3. Runs a remote script that:
    - Renames `_htaccess` to `.htaccess` in the staging directory
    - Archives the current `~/public_html/` into `~/releases/<UTC-ISO-timestamp>/`
@@ -83,14 +83,17 @@ mv ~/releases/<target-timestamp> ~/public_html
 
 Before the first deploy can succeed, the server must already meet these requirements. These are server-side prerequisites (already in place on standard cPanel Linux hosts), not GitHub-side:
 
-- `bash`, `rsync`, `flock` and `lslocks` (from `util-linux`), `find` (GNU), and `date` (GNU) must be available on the server's `$PATH`.
+- `bash`, `flock` and `lslocks` (from `util-linux`), `find` (GNU), and `date` (GNU) must be available on the server's `$PATH`.
+- `scp` (from OpenSSH) must be available — it is installed alongside `ssh` on virtually every Linux host.
 - The public key corresponding to `~/.ssh/cpanel_deploy` (the private key pasted into the `CPANEL_SSH_KEY` GitHub Secret) must be listed in `~/.ssh/authorized_keys` on the server.
+
+> **Why not `rsync`?** The pipeline uses `scp` instead of `rsync` because `rsync` is not installed on this hosting account and cPanel users cannot install system packages. `scp` transfers the full build on every deploy — fine for a portfolio site (~200KB) and avoids the host-side dependency.
 
 Verify on the server before the first deploy:
 
 ```bash
 # On the server, check these are available:
-which bash rsync flock lslocks find date
+which bash scp ssh flock lslocks find date
 
 # Confirm the public key for cpanel_deploy is listed here:
 cat ~/.ssh/authorized_keys
@@ -115,10 +118,10 @@ If `~/public_html` does not exist yet, the first deploy will create it via the s
 - Verify `CPANEL_SSH_HOST` and `CPANEL_SSH_PORT` are correct.
 - Try connecting manually: `ssh -p 54327 kbkbsuzc@patriciomanquepillan.com`.
 
-### Workflow fails at "Sync to staging on server"
+### Workflow fails at "Clean staging on server" or "Sync to staging on server"
 
 - The existence of `~/.deploy.lock` is harmless when no deploy holds it; the lock is attached to an open file descriptor, not to the file's existence. Do not delete it. If a deploy appears hung, use `lslocks | grep .deploy.lock` to check whether a process currently holds the lock.
-- Staging `~/public_html_new/` **is reused across deploys**. `rsync --delete` reconverges it to the current build, so stale staging left by a failed deploy is overwritten by the next successful rsync.
+- Staging `~/public_html_new/` is wiped and repopulated on every deploy (`rm -rf` then `scp`), so stale staging left by a failed deploy is overwritten on the next successful run.
 - Verify disk space: `df -h ~`.
 
 ### Site shows the old version after deploy
