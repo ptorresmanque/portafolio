@@ -3,10 +3,6 @@ import { ChangeDetectionStrategy, Component, computed, input, output } from '@an
 import { Project, PersonalProject, WorkProject } from '../../models/project';
 import { TranslationPipe } from '../../i18n/translation.pipe';
 
-type ProjectWithHighlights = Project & {
-  readonly highlights?: readonly string[];
-};
-
 @Component({
   selector: 'app-project-card',
   imports: [NgOptimizedImage, TranslationPipe],
@@ -36,7 +32,7 @@ export class ProjectCard {
   });
 
   protected readonly hasHighlights = computed(() => {
-    const p = this.project() as ProjectWithHighlights;
+    const p = this.project();
     return (p.highlights?.length ?? 0) > 0;
   });
 

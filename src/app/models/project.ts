@@ -18,6 +18,7 @@ export interface BaseProject {
   readonly shortDescription: string;
   readonly technologies: readonly string[];
   readonly body: string;
+  readonly highlights?: readonly string[];
 }
 
 export interface WorkProject extends BaseProject {

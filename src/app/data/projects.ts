@@ -24,6 +24,11 @@ export const PROJECTS: Project[] = [
       'Highcharts',
       'Git',
     ],
+    highlights: [
+      'Unificó 4 SCADA independientes en una sola plataforma web',
+      '50+ plantas migradas, incluida la desalinizadora de Iquique',
+      'Stack: AVEVA · Oracle · Angular · Spring Boot · Python',
+    ],
     body: `Telemetría 2.0 surgió como respuesta a una problemática estructural del grupo Aguas Nuevas: cada una de las cuatro empresas que lo componían —Aguas Altiplano, Aguas Chañar, Aguas Araucanía y Aguas Magallanes— operaba su propio sistema SCADA de manera independiente, con versiones obsoletas, licencias en modo trial y sin parches de seguridad. La administración de estos sistemas recaía en el área de mantenimiento —frecuentemente con personal subcontratado— sin protocolos formales de soporte, lo que impedía centralizar la información operativa y explotar la data generada por las plantas de tratamiento y distribución de agua.
 
 El proyecto abordó esta fragmentación con un alcance definido: acordar un nuevo diseño de SCADA, construir un sistema unificado para las cuatro empresas, migrar las bases de datos de las plantas —incluyendo la emblemática desalinizadora por ósmosis inversa de Iquique—, incorporar progresivamente la totalidad de las plantas a la nueva plataforma, desarrollar una aplicación web para la visualización de los datos unificados y capacitar a los operarios en su uso.
@@ -58,6 +63,11 @@ Entre los principales logros del proyecto destaco la unificación de las bases d
     shortDescription:
       'Sistema de gestión automatizada de backstops crediticios para el área de Capital, desarrollado en el marco de una iniciativa conjunta con la Unión Europea.',
     technologies: ['Angular', 'Java', 'Spring Boot', 'Kubernetes', 'Git'],
+    highlights: [
+      'Motor de reglas de cobertura crediticia configurable',
+      'Migración de reportes manuales a módulo regulatorio automatizado',
+      'Stack: Angular · Java · Spring Boot · Kubernetes',
+    ],
     body: `Backstops es un sistema de gestión automatizada de backstops crediticios que desarrollé en NTT Data España, asignado al área de Capital de Banco Santander, dentro de una iniciativa del banco con la Unión Europea. Estuve en el proyecto entre abril de 2022 y abril de 2025, bajo el liderazgo técnico de Tiago Joel Da Silva Monteiro.
 
 El producto centraliza las políticas de cobertura crediticia: motor de reglas configurable, scoring de operaciones, integración con los sistemas internos del banco y un módulo de reporting regulatorio que automatiza reportes que antes se hacían a mano.
@@ -90,6 +100,11 @@ Mi rol pasó de frontend a fullstack. Empecé con las interfaces de configuraci�
     shortDescription:
       'Portal institucional de la Comunidad de Madrid: buscador de trámites, agenda de eventos y tablón de anuncios accesible para ciudadanos.',
     technologies: ['Angular', 'micro front end', 'capacitor', 'postgresql', 'jenkins', 'mova3 libraries', 'typescript', 'python'],
+    highlights: [
+      'WCAG AA estricto: librería accesible adoptada como estándar interno',
+      'Angular Universal con TTFB < 200 ms y 2M visitas/mes',
+      'Stack: Angular · Micro Front Ends · Capacitor · TypeScript',
+    ],
     body: `Proyecto licitado para digitalizar la experiencia ciudadana de la Comunidad de Madrid. Fui frontend developer en un equipo de 12 personas, centrado en los flujos de búsqueda y descubrimiento de trámites públicos.
 
 La accesibilidad WCAG AA fue lo que más marcó el producto. Cada componente pasaba por revisión con NVDA y VoiceOver antes de mergear. Construí una librería accesible (combobox custom, modal con focus trap, navegación por teclado en listados largos) que después se convirtió en el estándar interno para los siguientes portales del gobierno regional.
@@ -110,6 +125,11 @@ El otro pilar fue el SSR con Angular Universal: el portal recibe cerca de 2M de 
     shortDescription:
       'Catálogo del mercado automotriz chileno. Puedes revisar, buscar y comparar modelos de todas las marcas que se venden en Chile, y compartir las comparativas que armes con otros usuarios.',
     technologies: ['Angular', 'Angular Material', 'Express', 'Prisma', 'MySQL', 'TypeScript', 'Tailwind CSS', 'Playwright'],
+    highlights: [
+      'Comparador del mercado automotriz chileno con sharing de análisis',
+      'Scraping propio + motor de ranker configurable por criterio',
+      'Stack: Angular · Express · Prisma · MySQL · Playwright',
+    ],
     body: `cualautocompro.cl es mi proyecto personal. Una herramienta para analizar el mercado automotriz chileno y ayudar a quien va a comprar un vehículo a elegir mejor. Permite revisar, buscar y comparar modelos y versiones de todas las marcas que se venden en Chile, y compartir comparativas con otros usuarios.
 
 Como único responsable técnico, participé en todo el ciclo: modelé el dominio en Prisma sobre MySQL, construí el backend en Express + TypeScript con autenticación vía Passport (Google y Apple), y el frontend en Angular 22 con Angular Material. Diseñé una capa de scraping propio que mantiene el catálogo al día y un motor de ranker configurable para ponderar versiones según distintos criterios.
