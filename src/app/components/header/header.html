@@ -15,20 +15,21 @@
       <span class="ml-1 hidden font-sans text-xs font-normal text-secondary sm:inline">/ developer</span>
     </a>
 
-    <nav class="flex items-center gap-6 text-sm text-secondary">
+    <nav class="flex items-center gap-4 text-sm text-secondary sm:gap-6">
       <a
         href="#proyectos"
         class="hidden transition-colors hover:text-foreground sm:block"
-      >Proyectos</a>
+      >{{ 'nav.projects' | t }}</a>
       <a
         href="#sobre-mi"
         class="hidden transition-colors hover:text-foreground sm:block"
-      >Sobre mí</a>
+      >{{ 'nav.about' | t }}</a>
+      <app-lang-toggle />
       <a
-        [href]="'mailto:' + email"
-        class="group inline-flex items-center gap-1.5 font-medium text-foreground transition-colors hover:text-accent"
+        [href]="'mailto:' + ('nav.email' | t)"
+        class="group hidden items-center gap-1.5 font-medium text-foreground transition-colors hover:text-accent sm:inline-flex"
       >
-        <span>{{ email }}</span>
+        <span class="hidden md:inline">{{ 'nav.email' | t }}</span>
         <svg
           width="12"
           height="12"
