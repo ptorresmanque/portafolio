@@ -21,6 +21,7 @@ jobs:
     env:
       RELEASES_TO_KEEP: "3"
       NODE_VERSION: "22"
+      SSH_PORT: "54327"
 
     steps:
       - name: Checkout
@@ -41,24 +42,32 @@ jobs:
       - name: Verify _htaccess is in build output
         run: test -f dist/portafolio/browser/_htaccess || (echo "::error::_htaccess missing from build output" && exit 1)
 
-      - name: Clean staging on server
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.CPANEL_SSH_HOST }}
-          username: ${{ secrets.CPANEL_SSH_USER }}
-          port: ${{ secrets.CPANEL_SSH_PORT }}
-          key: ${{ secrets.CPANEL_SSH_KEY }}
-          script: rm -rf ~/public_html_new && mkdir -p ~/public_html_new
+      - name: Setup SSH key on runner
+        run: |
+          mkdir -p ~/.ssh
+          printf "%s" "${{ secrets.CPANEL_SSH_KEY }}" > ~/.ssh/cpanel_deploy
+          chmod 600 ~/.ssh/cpanel_deploy
 
-      - name: Sync build to staging
-        uses: appleboy/scp-action@v1
-        with:
-          host: ${{ secrets.CPANEL_SSH_HOST }}
-          username: ${{ secrets.CPANEL_SSH_USER }}
-          port: ${{ secrets.CPANEL_SSH_PORT }}
-          key: ${{ secrets.CPANEL_SSH_KEY }}
-          source: "dist/portafolio/browser"
-          target: "~/public_html_new"
+      - name: Clean staging on server
+        run: |
+          ssh -i ~/.ssh/cpanel_deploy \
+              -p ${SSH_PORT} \
+              -o StrictHostKeyChecking=no \
+              -o BatchMode=yes \
+              -o PreferredAuthentications=publickey \
+              ${{ secrets.CPANEL_SSH_USER }}@${{ secrets.CPANEL_SSH_HOST }} \
+              "rm -rf ~/public_html_new && mkdir -p ~/public_html_new"
+
+      - name: Upload build via SSH tar pipe
+        run: |
+          set -euxo pipefail
+          tar czf - -C dist/portafolio/browser . | ssh -i ~/.ssh/cpanel_deploy \
+              -p ${SSH_PORT} \
+              -o StrictHostKeyChecking=no \
+              -o BatchMode=yes \
+              -o PreferredAuthentications=publickey \
+              ${{ secrets.CPANEL_SSH_USER }}@${{ secrets.CPANEL_SSH_HOST }} \
+              "tar xzf - -C ~/public_html_new"
 
       - name: Atomic swap and prune
         uses: appleboy/ssh-action@v1
@@ -67,8 +76,13 @@ jobs:
         with:
           host: ${{ secrets.CPANEL_SSH_HOST }}
           username: ${{ secrets.CPANEL_SSH_USER }}
-          port: ${{ secrets.CPANEL_SSH_PORT }}
+          port: ${{ env.SSH_PORT }}
           key: ${{ secrets.CPANEL_SSH_KEY }}
           command_timeout: 5m
           envs: RELEASES_TO_KEEP
           script_path: .github/scripts/deploy.sh
+
+      - name: Health check
+        run: |
+          sleep 2
+          curl -fsS --retry 5 --retry-delay 3 -o /dev/null -w "HTTP %{http_code}\n" https://patriciomanquepillan.com/
