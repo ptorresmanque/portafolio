@@ -1,0 +1,66 @@
+name: Deploy to cPanel
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-cpanel
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      RELEASES_TO_KEEP: "3"
+      NODE_VERSION: "22"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify _htaccess is in build output
+        run: test -f dist/portafolio/browser/_htaccess || (echo "::error::_htaccess missing from build output" && exit 1)
+
+      - name: Setup SSH key
+        uses: webfactory/ssh-agent@v1
+        with:
+          ssh-private-key: ${{ secrets.CPANEL_SSH_KEY }}
+
+      - name: Add host to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p "${{ secrets.CPANEL_SSH_PORT }}" \
+            -H "${{ secrets.CPANEL_SSH_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Sync to staging on server
+        run: |
+          rsync -avz --delete \
+            -e "ssh -p ${{ secrets.CPANEL_SSH_PORT }}" \
+            dist/portafolio/browser/ \
+            "${{ secrets.CPANEL_SSH_USER }}@${{ secrets.CPANEL_SSH_HOST }}:public_html_new/"
+
+      - name: Atomic swap and prune
+        run: |
+          ssh -p "${{ secrets.CPANEL_SSH_PORT }}" \
+            "${{ secrets.CPANEL_SSH_USER }}@${{ secrets.CPANEL_SSH_HOST }}" \
+            "RELEASES_TO_KEEP='${{ env.RELEASES_TO_KEEP }}' bash -s" \
+            < .github/scripts/deploy.sh
