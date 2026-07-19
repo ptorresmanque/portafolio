@@ -574,4 +574,4 @@ The user (not the agent) must perform these manual steps to go live:
    ls -la ~/public_html
    ls -la ~/releases
    ```
-   Confirm `public_html` has the built files and `releases/` has 1 entry (the first deploy doesn't archive anything, but subsequent deploys will).
+   Confirm `public_html` has the built files. On the first deploy, `releases/` exists but is empty because there is no previous `public_html` to archive. Subsequent deploys create timestamped release entries.
