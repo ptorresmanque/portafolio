@@ -52,36 +52,43 @@ Copy the entire output (including the `-----BEGIN OPENSSH PRIVATE KEY-----` and 
 
 ## Rollback
 
-SSH into the server and run a safe four-step procedure. The key safety property: **verify the target release exists BEFORE moving the current live out of the way**, so a typo can't leave `public_html` absent.
+SSH into the server and run this safe procedure. It acquires the same lock as automatic deploys and verifies the target release before moving the current live site.
 
 ```bash
-# 1. List available releases (oldest to newest)
+# 1. Acquire the same deploy lock so no automatic deploy runs concurrently
+LOCK="$HOME/.deploy.lock"
+exec 9>"$LOCK"
+flock 9
+
+# 2. List available releases (oldest to newest)
 ls -1 ~/releases
 
-# 2. Verify the target release exists BEFORE moving anything
+# 3. Verify the target release exists BEFORE moving anything
 ls -d ~/releases/<target-timestamp>  # must succeed
 
-# 3. Move current live out of the way
+# 4. Move current live out of the way
 mv ~/public_html ~/releases/broken-$(date -u +%Y-%m-%dT%H-%M-%S)
 
-# 4. Restore the target release
+# 5. Restore the target release
 mv ~/releases/<target-timestamp> ~/public_html
+
+# Lock auto-releases when this SSH session ends
 ```
 
-`<target-timestamp>` is the directory name from step 1 you want to restore (for example `2026-07-19T10-30-45`). Step 2 is the safety check — if the directory doesn't exist, fix the name and re-check rather than running step 3.
+`<target-timestamp>` is the directory name from step 2 you want to restore (for example `2026-07-19T10-30-45`). Step 3 is the safety check — if the directory doesn't exist, fix the name and re-check rather than running step 4.
 
 ## Server prerequisites
 
 Before the first deploy can succeed, the server must already meet these requirements. These are server-side prerequisites (already in place on standard cPanel Linux hosts), not GitHub-side:
 
-- `bash`, `rsync`, `flock` (from `util-linux`), `find` (GNU), `date` (GNU), and `mktemp` must be available on the server's `$PATH`.
+- `bash`, `rsync`, `flock` and `lslocks` (from `util-linux`), `find` (GNU), and `date` (GNU) must be available on the server's `$PATH`.
 - The public key corresponding to `~/.ssh/cpanel_deploy` (the private key pasted into the `CPANEL_SSH_KEY` GitHub Secret) must be listed in `~/.ssh/authorized_keys` on the server.
 
 Verify on the server before the first deploy:
 
 ```bash
 # On the server, check these are available:
-which bash rsync flock find date mktemp
+which bash rsync flock lslocks find date
 
 # Confirm the public key for cpanel_deploy is listed here:
 cat ~/.ssh/authorized_keys
@@ -108,8 +115,8 @@ If `~/public_html` does not exist yet, the first deploy will create it via the s
 
 ### Workflow fails at "Sync to staging on server"
 
-- If a deploy fails partway, the lock `~/.deploy.lock` may remain held. Remove it on the server: `rm -f ~/.deploy.lock` (only safe if no deploy is actually running — check `ps aux | grep deploy.sh`).
-- Staging `~/public_html_new/` is **not** reused per deploy — `rsync --delete` cleans it before populating, so a stale staging should not cause issues.
+- The existence of `~/.deploy.lock` is harmless when no deploy holds it; the lock is attached to an open file descriptor, not to the file's existence. Do not delete it. If a deploy appears hung, use `lslocks | grep .deploy.lock` to check whether a process currently holds the lock.
+- Staging `~/public_html_new/` **is reused across deploys**. `rsync --delete` reconverges it to the current build, so stale staging left by a failed deploy is overwritten by the next successful rsync.
 - Verify disk space: `df -h ~`.
 
 ### Site shows the old version after deploy
