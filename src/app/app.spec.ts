@@ -40,6 +40,7 @@ describe('App', () => {
           useValue: {
             t: (key: string) => (key === 'skipLink' ? 'Skip to content' : key),
             lang: () => 'es' as const,
+            setLang: async () => {},
           },
         },
       ],
