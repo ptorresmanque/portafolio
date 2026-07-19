@@ -11,19 +11,26 @@
       [priority]="index() < 2"
       class="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
     />
-    <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/15 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+    <div
+      class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/15 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+    ></div>
   </div>
 
   <div class="flex flex-1 flex-col gap-5 p-6 md:p-7">
-    <header class="flex flex-col gap-1">
-      <div class="flex items-baseline justify-between gap-3">
-        <h3 class="text-display text-2xl text-foreground md:text-[1.7rem]">
-          {{ project().title }}
-        </h3>
-        <span class="shrink-0 font-mono text-[11px] font-medium text-secondary">
+    <header class="flex flex-col gap-2">
+      <div class="flex items-center gap-2">
+        <span
+          class="rounded-full bg-accent/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-accent"
+        >
+          {{ kindLabel() | t }}
+        </span>
+        <span class="font-mono text-[11px] font-medium text-secondary">
           {{ project().year }}
         </span>
       </div>
+      <h3 class="text-display text-2xl text-foreground md:text-[1.7rem]">
+        {{ project().title }}
+      </h3>
       <p class="text-sm text-secondary">
         {{ project().company }} · <span class="text-accent">{{ project().role }}</span>
       </p>
@@ -31,6 +38,11 @@
 
     <p class="text-[15px] leading-relaxed text-secondary">
       {{ project().shortDescription }}
+      @if (hasHighlights()) {
+        <span class="mt-2 block text-xs font-medium text-foreground">
+          {{ 'projects.highlightsLabel' | t }}:
+        </span>
+      }
     </p>
 
     <div class="flex flex-wrap gap-1.5">
@@ -49,7 +61,7 @@
           class="inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-xs font-medium text-background transition-colors hover:bg-accent"
           [attr.aria-label]="'Ver carta de recomendación de ' + project().title"
         >
-          Ver carta
+          {{ 'projects.action.viewLetter' | t }}
           <svg
             width="12"
             height="12"
@@ -67,15 +79,15 @@
         </button>
       } @else {
         <div class="flex flex-wrap items-center justify-end gap-2">
-          @if (siteUrl()) {
+          @if (siteUrl(); as url) {
             <a
-              [href]="siteUrl()"
+              [href]="url"
               target="_blank"
               rel="noopener noreferrer"
               class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-xs font-medium text-background transition-colors hover:bg-accent"
               [attr.aria-label]="'Ir al sitio de ' + project().title"
             >
-              Ir al sitio
+              {{ 'projects.action.viewSite' | t }}
               <svg
                 width="12"
                 height="12"
@@ -99,7 +111,7 @@
             class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-xs font-medium text-background transition-colors hover:bg-accent"
             [attr.aria-label]="'Ver repositorio de ' + project().title + ' en GitHub'"
           >
-            Ver repositorio
+            {{ 'projects.action.viewRepo' | t }}
             <svg
               width="12"
               height="12"
@@ -112,7 +124,7 @@
               aria-hidden="true"
               class="transition-transform group-hover:translate-x-0.5"
             >
-              <path d="M7 17L17 7M9 7h8v8" />
+              <path d="M5 12h14M13 5l7 7-7 7" />
             </svg>
           </a>
         </div>
