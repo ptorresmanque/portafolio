@@ -49,7 +49,9 @@ describe('TranslationService', () => {
   });
 
   it('reads preferred-lang from localStorage on construction', () => {
+    TestBed.resetTestingModule();
     localStorage.setItem('preferred-lang', 'en');
+    TestBed.configureTestingModule({});
     const fresh = TestBed.inject(TranslationService);
     expect(fresh.lang()).toBe('en');
   });

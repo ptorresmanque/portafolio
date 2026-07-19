@@ -3,13 +3,10 @@
 // Three pieces of plumbing are required before the TranslationService tests
 // can run against the Angular unit-test infrastructure:
 //
-// 1. `localStorage` shadowing. Node.js 22+ exposes `globalThis.localStorage`
-//    as a getter that returns `undefined` unless the process is started
-//    with `--localstorage-file=<path>`. That shadows jsdom's own
-//    `window.localStorage`, so code that does `localStorage.getItem(...)`
-//    receives `undefined` in the jsdom environment. Replace it with an
-//    in-memory Storage that matches the browser interface used by the
-//    service.
+// 1. `localStorage` shadowing. Vitest's jsdom environment shadows the global
+//    `localStorage` binding with an unusable value in this setup, so code that
+//    does `localStorage.getItem(...)` receives `undefined`. Replace it with an
+//    in-memory Storage that matches the browser interface used by the service.
 //
 // 2. `navigator.language` defaults to `en-US` in jsdom, which makes the
 //    service's `detectInitialLang()` return `'en'` even when there is no
