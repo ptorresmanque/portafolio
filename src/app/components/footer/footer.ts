@@ -27,8 +27,8 @@ export class Footer {
     this.i18n.lang() === 'en' ? 'footer.cvLinkEn' : 'footer.cvLink',
   );
   protected readonly links: readonly FooterLink[] = [
-    { label: 'Email', href: 'mailto:patriciomanquepillantorres@gmail.com', external: false },
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/patricio-manquepillan-torres', external: true },
-    { label: 'GitHub', href: 'https://github.com/ptorresmanque', external: true },
+    { label: 'footer.link.email', href: 'mailto:patriciomanquepillantorres@gmail.com', external: false },
+    { label: 'footer.link.linkedin', href: 'https://www.linkedin.com/in/patricio-manquepillan-torres', external: true },
+    { label: 'footer.link.github', href: 'https://github.com/ptorresmanque', external: true },
   ];
 }

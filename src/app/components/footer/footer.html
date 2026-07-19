@@ -5,7 +5,7 @@
       <p class="text-sm text-secondary">{{ 'footer.tagline' | t }}</p>
     </div>
 
-    <nav class="flex flex-wrap items-center gap-5" aria-label="Contacto">
+    <nav class="flex flex-wrap items-center gap-5" aria-label="{{ 'footer.navAriaLabel' | t }}">
       @for (link of links; track link.label) {
         <a
           [href]="link.href"
@@ -13,7 +13,7 @@
           [attr.rel]="link.external ? 'noopener noreferrer' : null"
           class="group inline-flex items-center gap-1.5 text-sm font-medium text-foreground transition-colors hover:text-accent"
         >
-          {{ link.label }}
+          {{ link.label | t }}
           @if (link.external) {
             <svg
               width="11"
