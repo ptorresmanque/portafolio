@@ -37,7 +37,10 @@ describe('App', () => {
       providers: [
         {
           provide: TranslationService,
-          useValue: { t: (key: string) => (key === 'skipLink' ? 'Skip to content' : key) },
+          useValue: {
+            t: (key: string) => (key === 'skipLink' ? 'Skip to content' : key),
+            lang: () => 'es' as const,
+          },
         },
       ],
     });
