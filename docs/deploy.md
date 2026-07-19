@@ -7,8 +7,8 @@ This document explains how the CI/CD pipeline is configured and how to operate i
 Every push to `main` triggers a GitHub Actions workflow that:
 
 1. Builds the Angular app with Node 22 (`npm ci` + `npm run build`)
-2. Cleans the staging directory and transfers the static output as a `tar` archive piped through SSH to `~/public_html_new/` on the server
-3. Runs the swap script (`.github/scripts/deploy.sh`) on the server to atomically promote the staging directory to live
+2. Cleans the staging directory and transfers the static output via `appleboy/scp-action@v1` (which uses `tar` over SSH internally) to `~/public_html_new/` on the server
+3. Runs the swap script (`.github/scripts/deploy.sh`) on the server via `appleboy/ssh-action@v1` to atomically promote the staging directory to live
 3. (The swap script in step 2 handles the rest: renames `_htaccess` to `.htaccess`, archives the previous `~/public_html/` into `~/releases/<UTC-ISO-timestamp>/`, promotes `~/public_html_new/` to `~/public_html/`, and prunes old releases keeping the most recent 3.)
 
 > **Important:** Each deploy replaces the entire `~/public_html/` directory. Files uploaded manually through cPanel File Manager or another channel—including `cgi-bin/` and `.well-known/acme-challenge/`—will be deleted from the live site. This pipeline assumes `public_html` contains only the generated Angular build, consistent with the earlier confirmation that it is currently empty. Persistent files must live elsewhere or be included in the build.

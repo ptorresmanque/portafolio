@@ -42,15 +42,16 @@ jobs:
         run: test -f dist/portafolio/browser/_htaccess || (echo "::error::_htaccess missing from build output" && exit 1)
 
       - name: Clean staging and sync build
-        uses: appleboy/ssh-action@v1
+        uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.CPANEL_SSH_HOST }}
           username: ${{ secrets.CPANEL_SSH_USER }}
           port: ${{ secrets.CPANEL_SSH_PORT }}
           key: ${{ secrets.CPANEL_SSH_KEY }}
           passphrase: ${{ secrets.CPANEL_SSH_KEY_PASSPHRASE }}
-          command: rm -rf ~/public_html_new && mkdir -p ~/public_html_new && tar -xzf - -C ~/public_html_new
-          script: tar -czf - -C dist/portafolio/browser .
+          source: "dist/portafolio/browser"
+          target: "~/public_html_new"
+          rm: true
 
       - name: Atomic swap and prune
         uses: appleboy/ssh-action@v1
