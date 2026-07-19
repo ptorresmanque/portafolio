@@ -47,6 +47,10 @@ jobs:
           mkdir -p ~/.ssh
           printf "%s" "${{ secrets.CPANEL_SSH_KEY }}" > ~/.ssh/cpanel_deploy
           chmod 600 ~/.ssh/cpanel_deploy
+          echo "=== Key fingerprint from GitHub Secret ==="
+          ssh-keygen -l -f ~/.ssh/cpanel_deploy 2>&1 || echo "ERROR: cannot load key from secret"
+          echo "=== Test passphrase (should NOT prompt) ==="
+          ssh-keygen -y -f ~/.ssh/cpanel_deploy 2>&1 | head -1
 
       - name: Clean staging on server
         run: |
