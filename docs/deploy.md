@@ -14,6 +14,8 @@ Every push to `main` triggers a GitHub Actions workflow that:
    - Promotes `~/public_html_new/` to `~/public_html/`
    - Prunes old releases, keeping the most recent 3
 
+> **Important:** Each deploy replaces the entire `~/public_html/` directory. Files uploaded manually through cPanel File Manager or another channel—including `cgi-bin/` and `.well-known/acme-challenge/`—will be deleted from the live site. This pipeline assumes `public_html` contains only the generated Angular build, consistent with the earlier confirmation that it is currently empty. Persistent files must live elsewhere or be included in the build.
+
 ## Required GitHub Secrets
 
 Configure in **Settings → Secrets and variables → Actions → New repository secret**:
