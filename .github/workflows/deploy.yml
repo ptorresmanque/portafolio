@@ -41,10 +41,39 @@ jobs:
       - name: Verify _htaccess is in build output
         run: test -f dist/portafolio/browser/_htaccess || (echo "::error::_htaccess missing from build output" && exit 1)
 
-      - name: Setup SSH key
-        uses: webfactory/ssh-agent@v0.10.0
-        with:
-          ssh-private-key: ${{ secrets.CPANEL_SSH_KEY }}
+      - name: Setup SSH agent with passphrase
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.CPANEL_SSH_KEY }}
+          SSH_KEY_PASSPHRASE: ${{ secrets.CPANEL_SSH_KEY_PASSPHRASE }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          # Start ssh-agent and persist its env to subsequent steps
+          eval "$(ssh-agent -s)"
+          {
+            echo "SSH_AUTH_SOCK=${SSH_AUTH_SOCK}"
+            echo "SSH_AGENT_PID=${SSH_AGENT_PID}"
+          } >> "$GITHUB_ENV"
+
+          # Materialize the private key as a restricted file
+          KEY_FILE="$(mktemp)"
+          chmod 600 "$KEY_FILE"
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$KEY_FILE"
+
+          # Askpass script: prints the passphrase when invoked by ssh-add
+          ASKPASS="$(mktemp)"
+          chmod 700 "$ASKPASS"
+          printf '%s\n%s\n' '#!/bin/sh' 'printf "%s\n" "$SSH_KEY_PASSPHRASE"' > "$ASKPASS"
+
+          # Add the key non-interactively (SSH_ASKPASS forces use of our helper)
+          DISPLAY=:0 \
+            SSH_ASKPASS="$ASKPASS" \
+            SSH_ASKPASS_REQUIRE=force \
+            ssh-add "$KEY_FILE" < /dev/null
+
+          ssh-add -l
+          rm -f "$KEY_FILE" "$ASKPASS"
 
       - name: Add host to known_hosts
         run: |

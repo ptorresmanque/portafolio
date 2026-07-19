@@ -22,7 +22,8 @@ Configure in **Settings → Secrets and variables → Actions → New repository
 
 | Name | Value |
 |---|---|
-| `CPANEL_SSH_KEY` | Full contents of `~/.ssh/cpanel_deploy` (the private key) — **must not have a passphrase** |
+| `CPANEL_SSH_KEY` | Full contents of `~/.ssh/cpanel_deploy` (the private key) |
+| `CPANEL_SSH_KEY_PASSPHRASE` | The passphrase of that private key (if any) |
 | `CPANEL_SSH_USER` | `kbkbsuzc` |
 | `CPANEL_SSH_HOST` | `patriciomanquepillan.com` |
 | `CPANEL_SSH_PORT` | `54327` |
@@ -33,15 +34,17 @@ To get the key contents:
 cat ~/.ssh/cpanel_deploy
 ```
 
-Copy the entire output (including the `-----BEGIN OPENSSH PRIVATE KEY-----` and `-----END OPENSSH PRIVATE KEY-----` lines) into the secret value.
+Copy the entire output (including the `-----BEGIN OPENSSH PRIVATE KEY-----` and `-----END OPENSSH PRIVATE KEY-----` lines) into the `CPANEL_SSH_KEY` secret value.
 
-> **The private key must not have a passphrase.** `webfactory/ssh-agent` calls `ssh-add` which prompts for a passphrase on stdin — GitHub Actions has no interactive prompt and the deploy will fail at "Setup SSH key" with `Command failed: ssh-add -`. To regenerate without passphrase:
->
-> ```bash
-> ssh-keygen -t ed25519 -f ~/.ssh/cpanel_deploy -N "" -C "github-actions-deploy"
-> ```
->
-> The public key on the server (in `~/.ssh/authorized_keys`) is unchanged — only the private key file is overwritten. Then update the `CPANEL_SSH_KEY` secret with the new contents.
+If `~/.ssh/cpanel_deploy` has a passphrase, run this to retrieve it (the passphrase you type to unlock the key is **not** stored anywhere — you need to remember it):
+
+```bash
+ssh-keygen -y -f ~/.ssh/cpanel_deploy   # asks for passphrase; if it asks, one exists
+```
+
+Store that passphrase as the `CPANEL_SSH_KEY_PASSPHRASE` secret. The workflow uses `SSH_ASKPASS` to unlock the key non-interactively inside the runner.
+
+> **If you change the passphrase later**, update the `CPANEL_SSH_KEY_PASSPHRASE` secret to match. The private key file (`CPANEL_SSH_KEY`) does not change.
 
 ## Triggering a manual deploy
 
@@ -116,9 +119,11 @@ If `~/public_html` does not exist yet, the first deploy will create it via the s
 
 ## Troubleshooting
 
-### Workflow fails at "Setup SSH key"
+### Workflow fails at "Setup SSH agent with passphrase"
 
-- **`ssh-add` prompts for a passphrase**: this means the private key in `CPANEL_SSH_KEY` has a passphrase. Regenerate without one (see the note in "Required GitHub Secrets") and update the secret.
+- **`ssh-add` still prompts**: confirms `CPANEL_SSH_KEY_PASSPHRASE` is missing or wrong. Confirm the secret exists with the exact passphrase (including any spaces or special characters).
+- **`Bad passphrase` / `Permission denied (publickey)` further down**: the key was loaded but ssh-add rejected the passphrase. Re-check the secret value.
+- **`Load key "...": invalid format`**: the private key in `CPANEL_SSH_KEY` is corrupted (extra/missing newline, truncated). Re-paste the full contents of `~/.ssh/cpanel_deploy`.
 - Confirm the `CPANEL_SSH_KEY` secret contains the full private key, including header/footer lines.
 - Confirm the public key corresponding to `~/.ssh/cpanel_deploy` is listed in `~/.ssh/authorized_keys` on the server.
 
