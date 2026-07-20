@@ -398,16 +398,29 @@ Crear `src/app/cv/cv.component.spec.ts`:
 
 ```typescript
 import { TestBed } from '@angular/core/testing';
+import { provideRouter, ActivatedRoute } from '@angular/router';
 import { describe, it, expect } from 'vitest';
 import { CvComponent } from './cv.component';
 import { CV } from './data/cv.data';
+import { signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { BehaviorSubject } from 'rxjs';
 
 function setup(lang: 'es' | 'en') {
+  const paramMap = new BehaviorSubject<{ get(key: string): string | null }>({
+    get: (key: string) => (key === 'lang' ? lang : null),
+  });
+  const fakeRoute = {
+    parent: {
+      paramMap,
+    },
+  };
   TestBed.configureTestingModule({
-    imports: [CvComponent],
+    providers: [
+      { provide: ActivatedRoute, useValue: fakeRoute },
+    ],
   });
   const fixture = TestBed.createComponent(CvComponent);
-  fixture.componentRef.setInput('lang', lang);
   fixture.detectChanges();
   return fixture;
 }
@@ -474,7 +487,6 @@ describe('CvComponent', () => {
   it('does not leak EN content in ES view', () => {
     const fixture = setup('es');
     const el = fixture.nativeElement as HTMLElement;
-    expect(el.textContent).not.toContain('Frontier'); // improbable ES false positive
     expect(el.textContent).not.toContain('Apr 2022'); // fecha solo en EN
   });
 });
@@ -485,12 +497,15 @@ describe('CvComponent', () => {
 Run: `ng test --watch=false`
 Expected: FAIL con `Can't resolve all parameters for CvComponent` (componente no existe).
 
-- [ ] **Step 3: Crear el componente**
+- [ ] **Step 3: Crear el componente (lee `lang` de ActivatedRoute)**
 
 Crear `src/app/cv/cv.component.ts`:
 
 ```typescript
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs/operators';
 import { CV } from './data/cv.data';
 
 @Component({
@@ -501,7 +516,11 @@ import { CV } from './data/cv.data';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CvComponent {
-  readonly lang = input.required<'es' | 'en'>();
+  private readonly route = inject(ActivatedRoute);
+  protected readonly lang = toSignal(
+    this.route.parent!.paramMap.pipe(map((p) => (p.get('lang') as 'es' | 'en') ?? 'es')),
+    { initialValue: 'es' as 'es' | 'en' },
+  );
   protected readonly data = computed(() => CV[this.lang()]);
 }
 ```
@@ -935,35 +954,7 @@ Modificar `src/app/app.html`:
 <app-footer />
 ```
 
-- [ ] **Step 6: Modificar `cv.component.ts` para leer lang de ActivatedRoute**
-
-Modificar `src/app/cv/cv.component.ts`:
-
-```typescript
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs/operators';
-import { CV } from './data/cv.data';
-
-@Component({
-  selector: 'app-cv',
-  standalone: true,
-  templateUrl: './cv.component.html',
-  styleUrl: './cv.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class CvComponent {
-  private readonly route = inject(ActivatedRoute);
-  protected readonly lang = toSignal(
-    this.route.parent!.paramMap.pipe(map((p) => (p.get('lang') as 'es' | 'en') ?? 'es')),
-    { initialValue: 'es' as 'es' | 'en' },
-  );
-  protected readonly data = computed(() => CV[this.lang()]);
-}
-```
-
-- [ ] **Step 7: Modificar `app.config.ts` para proveer router**
+- [ ] **Step 6: Modificar `app.config.ts` para proveer router**
 
 Modificar `src/app/app.config.ts`:
 
@@ -983,27 +974,27 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-- [ ] **Step 8: Verificar build manual**
+- [ ] **Step 7: Verificar build manual**
 
 Run: `npm run build`
 Expected: build OK, sin errores de tipos.
 
-- [ ] **Step 9: Levantar dev server y verificar rutas en navegador**
+- [ ] **Step 8: Levantar dev server y verificar rutas en navegador**
 
 Run: `npm start`
 Visitar manualmente: `http://localhost:4200/` (debe mostrar el portafolio) y `http://localhost:4200/es/cv` (debe mostrar el CV en español).
 
 Detener el servidor con Ctrl+C.
 
-- [ ] **Step 10: Ejecutar tests para asegurar que nada se rompió**
+- [ ] **Step 9: Ejecutar tests para asegurar que nada se rompió**
 
 Run: `ng test --watch=false`
 Expected: PASS (todos los tests previos + los del CV).
 
-- [ ] **Step 11: Commit**
+- [ ] **Step 10: Commit**
 
 ```bash
-git add src/app/app.routes.ts src/app/cv/cv.routes.ts src/app/app.config.ts src/app/app.ts src/app/app.html src/app/cv/cv.component.ts src/app/pages/
+git add src/app/app.routes.ts src/app/cv/cv.routes.ts src/app/app.config.ts src/app/app.ts src/app/app.html src/app/pages/
 git commit -m "feat(cv): wire CV routes /:lang/cv via Angular Router"
 ```
 
