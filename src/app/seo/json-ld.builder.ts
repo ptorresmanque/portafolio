@@ -2,6 +2,7 @@ import { Project, WorkProject } from '../models/project';
 import { JsonLd } from './seo.types';
 
 const SITE_URL = 'https://patriciomanquepillan.com';
+const PROJECTS_SECTION_URL = `${SITE_URL}/#proyectos`;
 
 export function buildPerson(): JsonLd {
   return {
@@ -46,8 +47,8 @@ export function buildCreativeWork(project: Project): JsonLd {
     author: { '@type': 'Person', name: 'Patricio Manquepillan' },
     about: project.shortDescription,
     keywords: project.technologies.join(', '),
-    dateCreated: project.year,
-    url: `${SITE_URL}/#${project.id}`,
+    temporalCoverage: project.year,
+    url: PROJECTS_SECTION_URL,
   };
   if (project.kind === 'work') {
     const letter = (project as WorkProject).letter;
@@ -63,17 +64,10 @@ export function buildCreativeWork(project: Project): JsonLd {
   return base;
 }
 
-export function buildBreadcrumb(): JsonLd {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Inicio',
-        item: SITE_URL,
-      },
-    ],
-  };
+// BreadcrumbList is intentionally not emitted: a single-item breadcrumb
+// (the home page) adds no signal beyond what the WebSite schema already
+// provides, and Google has explicitly discouraged "home-only" breadcrumbs.
+// When Phase 2 introduces real per-section routing, wire this back in.
+export function buildBreadcrumb(): JsonLd | null {
+  return null;
 }

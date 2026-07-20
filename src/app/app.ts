@@ -51,7 +51,10 @@ export class App {
         this.seo.setCanonical('https://patriciomanquepillan.com/');
         this.seo.setStructuredData(buildPerson(), 'person');
         this.seo.setStructuredData(buildWebSite(), 'website');
-        this.seo.setStructuredData(buildBreadcrumb(), 'breadcrumb');
+        const breadcrumb = buildBreadcrumb();
+        if (breadcrumb) {
+          this.seo.setStructuredData(breadcrumb, 'breadcrumb');
+        }
         for (const project of PROJECTS) {
           this.seo.setStructuredData(buildCreativeWork(project), `project-${project.id}`);
         }
