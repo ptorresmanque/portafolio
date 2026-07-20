@@ -15,6 +15,12 @@
     Header set Cache-Control "public, max-age=86400"
   </FilesMatch>
 
+  # CV PDFs: regenerate on every deploy (no cache) so updates are immediate
+  <FilesMatch "\.pdf$">
+    Header set Cache-Control "no-cache, must-revalidate"
+    Header unset ETag
+  </FilesMatch>
+
   # Angular content-hashed bundles are immutable
   <FilesMatch "-[A-Z0-9]{6,}\.(js|css)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
@@ -35,6 +41,7 @@
 # MIME types
 <IfModule mod_mime.c>
   AddType application/xml .xml
+  AddType application/pdf .pdf
 </IfModule>
 
 # Compression

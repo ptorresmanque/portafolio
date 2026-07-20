@@ -36,11 +36,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
-        run: npm run build
+      - name: Build (Angular + CV PDFs)
+        run: npm run build:full
 
-      - name: Verify _htaccess is in build output
-        run: test -f dist/portafolio/browser/_htaccess || (echo "::error::_htaccess missing from build output" && exit 1)
+      - name: Verify deploy artifacts
+        run: |
+          set -euo pipefail
+          test -f dist/portafolio/browser/index.html    || { echo "::error::index.html missing from build output"; exit 1; }
+          test -f dist/portafolio/browser/_htaccess     || { echo "::error::_htaccess missing from build output"; exit 1; }
+          test -f dist/portafolio/browser/cv-es.pdf     || { echo "::error::cv-es.pdf missing from build output (build:full failed?)"; exit 1; }
+          test -f dist/portafolio/browser/cv-en.pdf     || { echo "::error::cv-en.pdf missing from build output (build:full failed?)"; exit 1; }
+          echo "all deploy artifacts present:"
+          ls -la dist/portafolio/browser/index.html dist/portafolio/browser/_htaccess dist/portafolio/browser/cv-*.pdf
 
       - name: Setup SSH key on runner
         run: |

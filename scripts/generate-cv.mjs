@@ -112,6 +112,14 @@ async function generate(lang) {
         `[generate-cv] ⚠️ cv-${lang}.pdf parece sospechosamente pequeño (${stat.size} bytes)`,
       );
     }
+    // Si el build ya existe, también escribir al output de Angular para que el
+    // deploy no requiera un `ng build` extra. Esto cubre el flujo CI donde
+    // `npm run build:full` corre ng build primero y luego este script.
+    if (fs.existsSync(DIST)) {
+      const distPath = path.join(DIST, `cv-${lang}.pdf`);
+      fs.copyFileSync(outPath, distPath);
+      console.log(`[generate-cv] cv-${lang}.pdf copiado → ${path.relative(ROOT, distPath)}`);
+    }
     return outPath;
   } finally {
     await browser.close();
