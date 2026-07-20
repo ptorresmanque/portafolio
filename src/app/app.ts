@@ -1,5 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
-import { RouterOutlet, ActivatedRoute } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { TranslationService } from './i18n/translation.service';
 import { SeoService } from './seo/seo.service';
 import {
@@ -19,7 +19,6 @@ import { PROJECTS } from './data/projects';
 export class App {
   private readonly i18n = inject(TranslationService);
   private readonly seo = inject(SeoService);
-  private readonly route = inject(ActivatedRoute);
 
   constructor() {
     effect(() => {

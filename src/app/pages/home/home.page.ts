@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { Hero } from '../../components/hero/hero';
 import { About } from '../../components/about/about';
 import { ProjectsSection } from '../../components/projects-section/projects-section';
