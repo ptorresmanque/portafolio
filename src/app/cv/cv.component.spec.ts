@@ -1,10 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { provideRouter, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { describe, it, expect } from 'vitest';
 import { CvComponent } from './cv.component';
 import { CV } from './data/cv.data';
-import { signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
 
 function setup(lang: 'es' | 'en') {
