@@ -36,6 +36,27 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
+## Generating CV PDFs
+
+The "Download CV" buttons in the hero and footer link to `/cv-es.pdf` and `/cv-en.pdf`. These PDFs are not committed to the repo — they are generated at build time.
+
+To regenerate just the PDFs (after editing CV data in `src/app/cv/data/cv.data.ts`):
+
+```bash
+npm run build
+npm run cv
+```
+
+Or run the full build + CV generation in one command:
+
+```bash
+npm run build:full
+```
+
+The script uses Puppeteer with the bundled Chromium. On first install it downloads ~300 MB. Set `PUPPETEER_SKIP_DOWNLOAD=true` if you have a system Chrome and want to use it instead.
+
+The CV is rendered from an Angular component (`src/app/cv/`) and printed to single-page A4 PDFs at `dist/portafolio/browser/cv-es.pdf` and `dist/portafolio/browser/cv-en.pdf`.
+
 ## Running unit tests
 
 To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
