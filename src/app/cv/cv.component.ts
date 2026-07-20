@@ -14,8 +14,16 @@ import { CV } from './data/cv.data';
 export class CvComponent {
   private readonly route = inject(ActivatedRoute);
   protected readonly lang = toSignal(
-    this.route.parent!.paramMap.pipe(map((p) => (p.get('lang') as 'es' | 'en') ?? 'es')),
+    this.route.parent!.paramMap.pipe(map((p) => this.normalize(p.get('lang')))),
     { initialValue: 'es' as 'es' | 'en' },
   );
   protected readonly data = computed(() => CV[this.lang()]);
+
+  private normalize(raw: string | null): 'es' | 'en' {
+    // Acepta 'es' y 'en' literales; cualquier otro cae a 'es'.
+    // Esto evita depender del nombre de la clave del param (que con constraint
+    // patterns como `:lang(es|en)` se vuelve literal `"lang(es|en)"`).
+    const first = (raw ?? '').toLowerCase().split(/[^a-z]/)[0];
+    return first === 'en' ? 'en' : 'es';
+  }
 }

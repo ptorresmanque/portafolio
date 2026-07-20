@@ -38,7 +38,7 @@ This will compile your project and store the build artifacts in the `dist/` dire
 
 ## Generating CV PDFs
 
-The "Download CV" buttons in the hero and footer link to `/cv-es.pdf` and `/cv-en.pdf`. These PDFs are not committed to the repo — they are generated at build time.
+The "Download CV" buttons in the hero and footer link to `/cv-es.pdf` and `/cv-en.pdf`. These PDFs are not committed to the repo — they are generated into `public/` (which `ng serve` serves directly and `ng build` copies into `dist/`).
 
 To regenerate just the PDFs (after editing CV data in `src/app/cv/data/cv.data.ts`):
 
@@ -53,9 +53,16 @@ Or run the full build + CV generation in one command:
 npm run build:full
 ```
 
+For local dev with the buttons working, run the script once after `npm install`:
+
+```bash
+npm run build && npm run cv   # genera public/cv-{es,en}.pdf
+npm start                      # ng serve los sirve en /cv-{es,en}.pdf
+```
+
 The script uses Puppeteer with the bundled Chromium. On first install it downloads ~300 MB. Set `PUPPETEER_SKIP_DOWNLOAD=true` if you have a system Chrome and want to use it instead.
 
-The CV is rendered from an Angular component (`src/app/cv/`) and printed to single-page A4 PDFs at `dist/portafolio/browser/cv-es.pdf` and `dist/portafolio/browser/cv-en.pdf`.
+The CV is rendered from an Angular component (`src/app/cv/`) and printed to single-page A4 PDFs at `public/cv-es.pdf` and `public/cv-en.pdf` (Angular copies them into `dist/portafolio/browser/` on build).
 
 ## Running unit tests
 

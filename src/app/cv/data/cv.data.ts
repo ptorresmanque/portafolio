@@ -33,7 +33,7 @@ const HEADER = {
 
 const EXPERIENCE_ES: CvData['experience'] = [
   {
-    company: 'Comunidad de Madrid',
+    company: 'Comunidad de Madrid (vía NTT Data España)',
     role: 'Frontend developer',
     period: '2025 — actualidad',
     bullets: [
@@ -78,7 +78,7 @@ const EXPERIENCE_ES: CvData['experience'] = [
 
 const EXPERIENCE_EN: CvData['experience'] = [
   {
-    company: 'Community of Madrid',
+    company: 'Community of Madrid (via NTT Data España)',
     role: 'Frontend developer',
     period: '2025 — present',
     bullets: [

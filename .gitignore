@@ -52,5 +52,8 @@ Thumbs.db
 /public/site.webmanifest
 /public/_favicon-markup.html
 
+# Generated CV PDFs (regenerate via `npm run cv` or `npm run build:full`)
+/public/cv-*.pdf
+
 # Agent scratch space (SDD progress, task briefs/reports)
 /.superpowers/

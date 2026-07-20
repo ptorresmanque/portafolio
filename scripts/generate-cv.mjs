@@ -8,6 +8,7 @@ import puppeteer from 'puppeteer';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const DIST = path.join(ROOT, 'dist', 'portafolio', 'browser');
+const PUBLIC_OUT = path.join(ROOT, 'public'); // ng serve + ng build sirven `public/` como assets
 const PORT = Number(process.env.CV_PORT ?? 4321);
 
 const MIME = {
@@ -96,7 +97,7 @@ async function generate(lang) {
     await page.waitForSelector('app-cv', { timeout: 10000 });
     // Pequeña espera extra para que carguen las fonts
     await new Promise((r) => setTimeout(r, 300));
-    const outPath = path.join(DIST, `cv-${lang}.pdf`);
+    const outPath = path.join(PUBLIC_OUT, `cv-${lang}.pdf`);
     await page.pdf({
       path: outPath,
       format: 'A4',
@@ -105,7 +106,7 @@ async function generate(lang) {
       margin: { top: '0', right: '0', bottom: '0', left: '0' },
     });
     const stat = fs.statSync(outPath);
-    console.log(`[generate-cv] cv-${lang}.pdf escrito: ${(stat.size / 1024).toFixed(1)} KB`);
+    console.log(`[generate-cv] cv-${lang}.pdf escrito: ${(stat.size / 1024).toFixed(1)} KB → ${path.relative(ROOT, outPath)}`);
     if (stat.size < 10 * 1024) {
       console.warn(
         `[generate-cv] ⚠️ cv-${lang}.pdf parece sospechosamente pequeño (${stat.size} bytes)`,
