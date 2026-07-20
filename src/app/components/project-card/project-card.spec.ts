@@ -74,4 +74,18 @@ describe('ProjectCard', () => {
     const ratio = contrastRatio(FOREGROUND, bgComposite);
     expect(ratio).toBeGreaterThanOrEqual(4.5);
   });
+
+  it('renders up to two highlight bullets below the highlights label', () => {
+    const fixture = setup();
+    const root = fixture.nativeElement as HTMLElement;
+    const list = root.querySelector('ul');
+    expect(list).toBeTruthy();
+    const items = list!.querySelectorAll('li');
+    expect(items.length).toBeGreaterThan(0);
+    expect(items.length).toBeLessThanOrEqual(2);
+
+    const project = PROJECTS[0];
+    expect(project.highlights?.length ?? 0).toBeGreaterThan(0);
+    expect((items[0] as HTMLElement).textContent?.trim()).toBe(project.highlights![0]);
+  });
 });

@@ -36,6 +36,10 @@ export class ProjectCard {
     return (p.highlights?.length ?? 0) > 0;
   });
 
+  protected readonly previewHighlights = computed(() => {
+    return this.project().highlights?.slice(0, 2) ?? [];
+  });
+
   protected onCardClick(): void {
     const p = this.project();
     if (p.kind === 'work') this.openDialog.emit(p);
