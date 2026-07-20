@@ -14,7 +14,6 @@ export interface ProjectLocalization {
   readonly letter?: {
     readonly paragraphs: readonly string[];
   };
-  readonly highlights?: readonly string[];
 }
 
 export interface BaseProject {
@@ -28,7 +27,6 @@ export interface BaseProject {
   readonly shortDescription: string;
   readonly technologies: readonly string[];
   readonly body: string;
-  readonly highlights?: readonly string[];
   readonly localized?: {
     readonly en?: ProjectLocalization;
   };

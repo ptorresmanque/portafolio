@@ -34,22 +34,6 @@
 
       <div class="flex-1 overflow-auto bg-muted/40">
         <div class="mx-auto max-w-3xl p-6 md:p-10">
-          @if (p.highlights && p.highlights.length > 0) {
-            <section class="mb-6 rounded-lg border border-accent/20 bg-accent/5 p-5 md:p-6">
-              <p class="mb-3 text-xs font-medium uppercase tracking-[0.15em] text-accent">
-                {{ 'projects.highlightsLabel' | t }}
-              </p>
-              <ul class="space-y-2 text-sm leading-relaxed text-foreground">
-                @for (h of p.highlights; track h) {
-                  <li class="flex gap-3">
-                    <span class="mt-1.5 inline-block size-1.5 shrink-0 rounded-full bg-accent"></span>
-                    <span>{{ h }}</span>
-                  </li>
-                }
-              </ul>
-            </section>
-          }
-
           @if (letter(); as letter) {
             <article
               class="rounded-lg border border-border bg-background p-8 shadow-[0_30px_60px_-30px_rgba(9,9,11,0.25)] md:p-12"

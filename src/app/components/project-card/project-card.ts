@@ -36,15 +36,6 @@ export class ProjectCard {
     return key;
   });
 
-  protected readonly hasHighlights = computed(() => {
-    const p = this.localized();
-    return (p.highlights?.length ?? 0) > 0;
-  });
-
-  protected readonly previewHighlights = computed(() => {
-    return this.localized().highlights?.slice(0, 2) ?? [];
-  });
-
   protected onCardClick(): void {
     const p = this.project();
     if (p.kind === 'work') this.openDialog.emit(p);

@@ -30,7 +30,6 @@
   "projects.action.viewLetter": "Ver carta",
   "projects.action.viewSite": "Ir al sitio",
   "projects.action.viewRepo": "Ver repositorio",
-  "projects.highlightsLabel": "Lo que cambió",
   "projects.action.viewLetterAria": "Ver carta de recomendación de {title}",
   "projects.action.viewSiteAria": "Ir al sitio de {title}",
   "projects.action.viewRepoAria": "Ver repositorio de {title} en GitHub",

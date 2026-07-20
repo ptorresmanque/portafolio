@@ -38,19 +38,6 @@
 
     <p class="text-[15px] leading-relaxed text-secondary">
       {{ localized().shortDescription }}
-      @if (hasHighlights()) {
-        <span class="mt-2 block text-xs font-medium text-foreground">
-          {{ 'projects.highlightsLabel' | t }}:
-        </span>
-        <ul class="mt-2 space-y-1 text-xs leading-relaxed text-secondary">
-          @for (h of previewHighlights(); track h) {
-            <li class="flex gap-2">
-              <span class="mt-1.5 inline-block size-1 shrink-0 rounded-full bg-accent"></span>
-              <span>{{ h }}</span>
-            </li>
-          }
-        </ul>
-      }
     </p>
 
     <div class="flex flex-wrap gap-1.5">

@@ -78,38 +78,43 @@ describe('ProjectCard', () => {
     expect(ratio).toBeGreaterThanOrEqual(4.5);
   });
 
-  it('renders up to two highlight bullets below the highlights label', () => {
+  it('does not render the highlights section in either language', () => {
+    const esFixture = setup('es');
+    const esRoot = esFixture.nativeElement as HTMLElement;
+
+    // Highlights were reverted (internal review only); the Spanish locale
+    // must not expose the label or the bullet list.
+    expect(esRoot.textContent).not.toContain('Lo que cambió');
+    expect(esRoot.querySelector('ul')).toBeNull();
+
+    TestBed.resetTestingModule();
+    const enFixture = setup('en');
+    const enRoot = enFixture.nativeElement as HTMLElement;
+    expect(enRoot.textContent).not.toContain('What changed');
+    expect(enRoot.querySelector('ul')).toBeNull();
+  });
+
+  it('renders the short description in the card without highlights bullets', () => {
     const fixture = setup();
     const root = fixture.nativeElement as HTMLElement;
-    const list = root.querySelector('ul');
-    expect(list).toBeTruthy();
-    const items = list!.querySelectorAll('li');
-    expect(items.length).toBeGreaterThan(0);
-    expect(items.length).toBeLessThanOrEqual(2);
-
     const project = PROJECTS[0];
-    expect(project.highlights?.length ?? 0).toBeGreaterThan(0);
-    expect((items[0] as HTMLElement).textContent?.trim()).toBe(project.highlights![0]);
+
+    expect(root.textContent).toContain(project.shortDescription);
   });
 
   it('renders the English overlay when the active language is en', () => {
     const fixture = setup('en');
     const root = fixture.nativeElement as HTMLElement;
-
-    // First highlight in the EN overlay, not the Spanish default
     const project = PROJECTS[0];
-    const firstEn = project.localized?.en?.highlights?.[0];
-    expect(firstEn).toBeTruthy();
-    expect(root.textContent).toContain(firstEn);
-    expect(root.textContent).not.toContain(project.highlights![0]);
 
-    // image alt is also swapped (the img tag carries it as an attribute)
+    // image alt is swapped (the img tag carries it as an attribute)
     const img = root.querySelector('img');
     expect(img?.getAttribute('alt')).toBe(project.localized!.en!.imageAlt);
 
-    // shortDescription is rendered from the overlay
-    const firstEnShort = project.localized?.en?.shortDescription;
-    expect(firstEnShort).toBeTruthy();
-    expect(root.textContent).toContain(firstEnShort);
+    // shortDescription is rendered from the overlay, not the Spanish default
+    const enShort = project.localized!.en!.shortDescription;
+    expect(enShort).toBeTruthy();
+    expect(root.textContent).toContain(enShort);
+    expect(root.textContent).not.toContain(project.shortDescription);
   });
 });

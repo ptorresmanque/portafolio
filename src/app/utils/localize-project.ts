@@ -9,7 +9,6 @@ export function applyLocalization(project: Project, overlay: ProjectLocalization
       imageAlt: overlay.imageAlt ?? work.imageAlt,
       shortDescription: overlay.shortDescription ?? work.shortDescription,
       body: overlay.body ?? work.body,
-      highlights: overlay.highlights ?? work.highlights,
       ...(work.letter && overlay.letter
         ? { letter: { ...work.letter, paragraphs: overlay.letter.paragraphs } }
         : {}),
@@ -20,6 +19,5 @@ export function applyLocalization(project: Project, overlay: ProjectLocalization
     imageAlt: overlay.imageAlt ?? project.imageAlt,
     shortDescription: overlay.shortDescription ?? project.shortDescription,
     body: overlay.body ?? project.body,
-    highlights: overlay.highlights ?? project.highlights,
   };
 }

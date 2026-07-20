@@ -3,6 +3,7 @@ import { describe, expect, it, beforeEach } from 'vitest';
 import { ComponentRef } from '@angular/core';
 import { ProjectDialog } from './project-dialog';
 import { PROJECTS } from '../../data/projects';
+import { TranslationService } from '../../i18n/translation.service';
 
 describe('ProjectDialog', () => {
   let componentRef: ComponentRef<ProjectDialog>;
@@ -36,9 +37,8 @@ describe('ProjectDialog', () => {
     expect(fired).toBe(true);
   });
 
-  it('renders the EN letter overlay when the active language is en', async () => {
+  it('renders the EN letter overlay when the active language is en', () => {
     TestBed.resetTestingModule();
-    const { TranslationService } = await import('../../i18n/translation.service');
     // jsdom does not implement HTMLDialogElement.showModal; stub it so the
     // dialog effect doesn't throw.
     HTMLDialogElement.prototype.showModal = function () {
@@ -70,5 +70,27 @@ describe('ProjectDialog', () => {
     const esOnly = project.kind === 'work' ? project.letter?.paragraphs?.[0] : undefined;
     expect(esOnly).toBeTruthy();
     expect(root.textContent).not.toContain(esOnly);
+  });
+
+  it('does not render the highlights section in the dialog', () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: TranslationService,
+          useValue: { lang: () => 'es' as const, t: (key: string) => key },
+        },
+      ],
+      imports: [ProjectDialog],
+    });
+    const fx = TestBed.createComponent(ProjectDialog);
+    fx.componentRef.setInput('project', PROJECTS[0]);
+    fx.detectChanges();
+    const root = fx.nativeElement as HTMLElement;
+
+    // Highlights section was reverted (internal review only); the label
+    // and its bullets must not appear in the rendered dialog.
+    expect(root.textContent).not.toContain('Lo que cambió');
+    expect(root.querySelector('section.rounded-lg')).toBeNull();
   });
 });
