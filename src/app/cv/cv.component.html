@@ -1,0 +1,73 @@
+@let d = data();
+
+<header class="header">
+  <h1 class="name">{{ d.header.name }}</h1>
+  <div class="accent-line"></div>
+  <ul class="contact-line" aria-label="Datos de contacto">
+    @for (item of d.header.contact; track item.href) {
+      <li>
+        <a [href]="item.href">{{ item.value }}</a>
+      </li>
+    }
+  </ul>
+</header>
+
+<section class="section">
+  <h2 class="section-title">{{ lang() === 'es' ? 'Resumen' : 'Summary' }}</h2>
+  <p class="summary">{{ d.summary }}</p>
+</section>
+
+<section class="section">
+  <h2 class="section-title">{{ lang() === 'es' ? 'Experiencia profesional' : 'Professional experience' }}</h2>
+  @for (exp of d.experience; track exp.company + exp.period) {
+    <article class="experience-row">
+      <div class="experience-meta">
+        <div class="experience-company">{{ exp.company }}</div>
+        <div class="experience-period">{{ exp.period }}</div>
+      </div>
+      <div class="experience-body">
+        <div class="experience-role">{{ exp.role }}</div>
+        <ul class="experience-bullets">
+          @for (bullet of exp.bullets; track bullet) {
+            <li>{{ bullet }}</li>
+          }
+        </ul>
+        @if (exp.stack && exp.stack.length > 0) {
+          <div class="experience-stack"><strong>Stack:</strong> {{ exp.stack?.join(' · ') }}</div>
+        }
+      </div>
+    </article>
+  }
+</section>
+
+<section class="section">
+  <h2 class="section-title">{{ lang() === 'es' ? 'Educación' : 'Education' }}</h2>
+  <ul class="education-list">
+    @for (edu of d.education; track edu.degree) {
+      <li>
+        {{ edu.degree }}@if (edu.note) { <span class="education-note"> — {{ edu.note }}</span> }
+      </li>
+    }
+  </ul>
+</section>
+
+<section class="section">
+  <h2 class="section-title">{{ lang() === 'es' ? 'Habilidades técnicas' : 'Technical skills' }}</h2>
+  @for (block of d.skills; track block.category) {
+    <div class="skill-block">
+      <span class="skill-category">{{ block.category }}:</span>
+      {{ block.items.join(' · ') }}
+    </div>
+  }
+</section>
+
+<section class="section">
+  <h2 class="section-title">{{ lang() === 'es' ? 'Idiomas' : 'Languages' }}</h2>
+  <ul class="languages-list">
+    @for (langItem of d.languages; track langItem.name) {
+      <li>{{ langItem.name }} — {{ langItem.level }}</li>
+    }
+  </ul>
+</section>
+
+<footer class="refs-note">{{ d.referencesNote }}</footer>
