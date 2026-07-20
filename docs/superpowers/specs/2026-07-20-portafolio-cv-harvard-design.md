@@ -43,6 +43,8 @@ scripts/
 - `package.json`: agrega `"cv": "node scripts/generate-cv.mjs"` y `"build:full": "npm run build && npm run cv"`
 - `angular.json`: ajusta el builder `build` para que encadene el script `generate-cv.mjs` tras la generación de bundles (configuración `architect.build.configurations.production.postbuild` o equivalente; si no es soportado por el builder, se documenta el flujo `build:full`)
 
+> **Decisión final sobre el encadenamiento:** el builder `@angular/build` v22 no soporta un hook `postbuild` nativo de forma estable. Se opta por el script npm `build:full` que encadena `ng build` + `node scripts/generate-cv.mjs`. El script npm `cv` se mantiene como entrada independiente para regenerar los PDFs sin re-buildear Angular.
+
 ### Archivos generados (no commiteados al repo)
 
 - `dist/portafolio/browser/cv-es.pdf`
@@ -119,6 +121,8 @@ Estructura una columna:
 ## 5. Estilos (`cv.component.css`)
 
 ```css
+@page { size: A4 portrait; margin: 0; }
+
 :host {
   /* A4 portrait, 12mm margins */
   width: 210mm;
