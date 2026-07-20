@@ -93,7 +93,9 @@ describe('Hero', () => {
       '6+ years in production · Angular lead at Banco Santander · WCAG AA at Comunidad de Madrid',
     );
     expect(links.some((a) => a.textContent?.includes('See projects'))).toBe(true);
-    expect(links.some((a) => a.textContent?.includes('Download CV'))).toBe(true);
+    const cv = links.find((a) => a.textContent?.includes('Download CV'));
+    expect(cv?.getAttribute('href')).toBe('/cv-en.pdf');
+    expect(cv?.getAttribute('download')).not.toBeNull();
     expect(links.some((a) => a.textContent?.includes('Email me'))).toBe(true);
   });
 });
