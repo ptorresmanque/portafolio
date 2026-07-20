@@ -28,7 +28,7 @@ export class Footer {
   );
   protected readonly links: readonly FooterLink[] = [
     { label: 'footer.link.email', href: 'mailto:patriciomanquepillantorres@gmail.com', external: false },
-    { label: 'footer.link.linkedin', href: 'https://www.linkedin.com/in/patricio-manquepillan-torres', external: true },
+    { label: 'footer.link.linkedin', href: 'https://www.linkedin.com/in/patriciomanquepillan', external: true },
     { label: 'footer.link.github', href: 'https://github.com/ptorresmanque', external: true },
   ];
 }

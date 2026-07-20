@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { describe, expect, it, beforeEach } from 'vitest';
+import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest';
 import { About } from './about';
 import { TranslationService } from '../../i18n/translation.service';
+import { yearsOfExperience } from '../../utils/experience';
 
 const ES = {
   'about.eyebrow': 'Sobre mí',
@@ -61,7 +62,7 @@ describe('About', () => {
     expect(root.querySelector('h2')?.textContent).toContain(
       'Producto, equipo y código limpio.',
     );
-    expect(root.textContent).toContain('Llevo 7 años en producción');
+    expect(root.textContent).toContain(`Llevo ${yearsOfExperience()} años en producción`);
     expect(root.textContent).toContain('Me obsesionan dos cosas y media.');
     expect(root.textContent).toContain(
       'Ahora liderando frontend en un portal con 2M visitas/mes y WCAG AA estricto.',
@@ -99,7 +100,7 @@ describe('About', () => {
 
     expect(root.textContent).toContain('About');
     expect(root.querySelector('h2')?.textContent).toContain('Product, team, and clean code.');
-    expect(root.textContent).toContain("I've spent 7 years in production");
+    expect(root.textContent).toContain(`I've spent ${yearsOfExperience()} years in production`);
     expect(root.textContent).toContain("I'm obsessed with two and a half things.");
     expect(root.textContent).toContain(
       'Now leading frontend on a portal with 2M visits/month and strict WCAG AA.',

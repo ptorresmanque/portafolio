@@ -8,7 +8,6 @@ import { ProjectsSection } from './components/projects-section/projects-section'
 import { PROJECTS } from './data/projects';
 import { Project } from './models/project';
 import { TranslationService } from './i18n/translation.service';
-import { LangToggle } from './i18n/lang-toggle.component';
 import { TranslationPipe } from './i18n/translation.pipe';
 import { SeoService } from './seo/seo.service';
 import {
@@ -27,7 +26,6 @@ import {
     ProjectsSection,
     ProjectDialog,
     Footer,
-    LangToggle,
     TranslationPipe,
   ],
   templateUrl: './app.html',
