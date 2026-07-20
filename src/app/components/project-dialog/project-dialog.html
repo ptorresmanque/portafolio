@@ -5,7 +5,7 @@
   class="m-0 max-h-screen w-screen max-w-none border-0 p-0 backdrop:bg-black/40"
   [attr.aria-labelledby]="project() ? 'dialog-title-' + project()!.id : null"
 >
-  @if (project(); as p) {
+  @if (localized(); as p) {
     <div
       class="flex max-h-[100dvh] w-screen flex-col bg-background text-foreground"
       role="document"
@@ -61,7 +61,7 @@
               </div>
 
               <div class="mt-10 border-t border-border pt-6">
-                <p class="text-right text-foreground">Atentamente,</p>
+                <p class="text-right text-foreground">{{ 'dialog.sincerely' | t }}</p>
                 <div class="mt-6 text-right text-sm text-secondary">
                   <p class="font-display text-base font-bold text-foreground">
                     {{ letter.signer.name }}

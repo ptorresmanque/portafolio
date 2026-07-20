@@ -7,6 +7,16 @@ export interface Letter {
   };
 }
 
+export interface ProjectLocalization {
+  readonly imageAlt?: string;
+  readonly shortDescription?: string;
+  readonly body?: string;
+  readonly letter?: {
+    readonly paragraphs: readonly string[];
+  };
+  readonly highlights?: readonly string[];
+}
+
 export interface BaseProject {
   readonly id: string;
   readonly title: string;
@@ -19,6 +29,9 @@ export interface BaseProject {
   readonly technologies: readonly string[];
   readonly body: string;
   readonly highlights?: readonly string[];
+  readonly localized?: {
+    readonly en?: ProjectLocalization;
+  };
 }
 
 export interface WorkProject extends BaseProject {

@@ -5,7 +5,7 @@
   <div class="relative aspect-[16/10] overflow-hidden bg-muted">
     <img
       [ngSrc]="project().image"
-      [alt]="project().imageAlt"
+      [alt]="localized().imageAlt"
       fill
       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
       [priority]="index() < 2"
@@ -29,15 +29,15 @@
         </span>
       </div>
       <h3 class="text-display text-2xl text-foreground md:text-[1.7rem]">
-        {{ project().title }}
+        {{ localized().title }}
       </h3>
       <p class="text-sm text-secondary">
-        {{ project().company }} · <span class="text-accent">{{ project().role }}</span>
+        {{ localized().company }} · <span class="text-accent">{{ localized().role }}</span>
       </p>
     </header>
 
     <p class="text-[15px] leading-relaxed text-secondary">
-      {{ project().shortDescription }}
+      {{ localized().shortDescription }}
       @if (hasHighlights()) {
         <span class="mt-2 block text-xs font-medium text-foreground">
           {{ 'projects.highlightsLabel' | t }}:
@@ -67,7 +67,7 @@
           type="button"
           (click)="openDialog.emit(project())"
           class="inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-xs font-medium text-background transition-colors hover:bg-accent"
-          [attr.aria-label]="'Ver carta de recomendación de ' + project().title"
+          [attr.aria-label]="'projects.action.viewLetterAria' | t:{title: project().title}"
         >
           {{ 'projects.action.viewLetter' | t }}
           <svg
@@ -93,7 +93,7 @@
               target="_blank"
               rel="noopener noreferrer"
               class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-xs font-medium text-background transition-colors hover:bg-accent"
-              [attr.aria-label]="'Ir al sitio de ' + project().title"
+              [attr.aria-label]="'projects.action.viewSiteAria' | t:{title: project().title}"
             >
               {{ 'projects.action.viewSite' | t }}
               <svg
@@ -117,7 +117,7 @@
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-foreground px-4 py-2 text-xs font-medium text-background transition-colors hover:bg-accent"
-            [attr.aria-label]="'Ver repositorio de ' + project().title + ' en GitHub'"
+            [attr.aria-label]="'projects.action.viewRepoAria' | t:{title: project().title}"
           >
             {{ 'projects.action.viewRepo' | t }}
             <svg

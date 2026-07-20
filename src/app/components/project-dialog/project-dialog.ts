@@ -12,6 +12,7 @@ import {
 import { Letter, Project, WorkProject } from '../../models/project';
 import { TranslationService } from '../../i18n/translation.service';
 import { TranslationPipe } from '../../i18n/translation.pipe';
+import { LocalizationService } from '../../i18n/localization.service';
 
 @Component({
   selector: 'app-project-dialog',
@@ -22,12 +23,18 @@ import { TranslationPipe } from '../../i18n/translation.pipe';
 })
 export class ProjectDialog {
   private readonly i18n = inject(TranslationService);
+  private readonly localization = inject(LocalizationService);
 
   readonly project = input<Project | null>(null);
   readonly closeDialog = output<void>();
 
+  protected readonly localized = computed(() => {
+    const p = this.project();
+    return p ? this.localization.localized(p)() : null;
+  });
+
   readonly letter = computed<Letter | null>(() => {
-    const project = this.project();
+    const project = this.localized();
     if (project?.kind !== 'work') return null;
     return (project as WorkProject).letter ?? null;
   });

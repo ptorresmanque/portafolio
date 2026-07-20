@@ -2,17 +2,20 @@ import { TestBed } from '@angular/core/testing';
 import { describe, expect, it, beforeEach } from 'vitest';
 import { ProjectCard } from './project-card';
 import { PROJECTS } from '../../data/projects';
+import { TranslationService } from '../../i18n/translation.service';
 
 const ES = { 'projects.kind.work': 'Trabajo', 'projects.kind.personal': 'Personal' };
+const EN = { 'projects.kind.work': 'Work', 'projects.kind.personal': 'Personal' };
 
-function setup() {
+function setup(lang: 'es' | 'en' = 'es') {
+  const dict = lang === 'es' ? ES : EN;
   TestBed.configureTestingModule({
     providers: [
       {
-        provide: 'TranslationService',
+        provide: TranslationService,
         useValue: {
-          lang: () => 'es' as const,
-          t: (key: string) => (ES as Record<string, string>)[key] ?? key,
+          lang: () => lang,
+          t: (key: string) => dict[key as keyof typeof dict] ?? key,
         },
       },
     ],
@@ -87,5 +90,26 @@ describe('ProjectCard', () => {
     const project = PROJECTS[0];
     expect(project.highlights?.length ?? 0).toBeGreaterThan(0);
     expect((items[0] as HTMLElement).textContent?.trim()).toBe(project.highlights![0]);
+  });
+
+  it('renders the English overlay when the active language is en', () => {
+    const fixture = setup('en');
+    const root = fixture.nativeElement as HTMLElement;
+
+    // First highlight in the EN overlay, not the Spanish default
+    const project = PROJECTS[0];
+    const firstEn = project.localized?.en?.highlights?.[0];
+    expect(firstEn).toBeTruthy();
+    expect(root.textContent).toContain(firstEn);
+    expect(root.textContent).not.toContain(project.highlights![0]);
+
+    // image alt is also swapped (the img tag carries it as an attribute)
+    const img = root.querySelector('img');
+    expect(img?.getAttribute('alt')).toBe(project.localized!.en!.imageAlt);
+
+    // shortDescription is rendered from the overlay
+    const firstEnShort = project.localized?.en?.shortDescription;
+    expect(firstEnShort).toBeTruthy();
+    expect(root.textContent).toContain(firstEnShort);
   });
 });

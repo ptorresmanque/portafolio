@@ -35,4 +35,40 @@ describe('ProjectDialog', () => {
     componentRef.instance.handleClose();
     expect(fired).toBe(true);
   });
+
+  it('renders the EN letter overlay when the active language is en', async () => {
+    TestBed.resetTestingModule();
+    const { TranslationService } = await import('../../i18n/translation.service');
+    // jsdom does not implement HTMLDialogElement.showModal; stub it so the
+    // dialog effect doesn't throw.
+    HTMLDialogElement.prototype.showModal = function () {
+      this.setAttribute('open', '');
+    };
+    HTMLDialogElement.prototype.close = function () {
+      this.removeAttribute('open');
+    };
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: TranslationService,
+          useValue: { lang: () => 'en' as const, t: (key: string) => key },
+        },
+      ],
+      imports: [ProjectDialog],
+    });
+    const fx = TestBed.createComponent(ProjectDialog);
+    fx.componentRef.setInput('project', PROJECTS[0]);
+    fx.detectChanges();
+    const root = fx.nativeElement as HTMLElement;
+
+    const enParagraph = PROJECTS[0].localized?.en?.letter?.paragraphs?.[0];
+    expect(enParagraph).toBeTruthy();
+    expect(root.textContent).toContain(enParagraph);
+    // Spanish-only paragraph should not leak into the EN render
+    const project = PROJECTS[0];
+    expect(project.kind).toBe('work');
+    const esOnly = project.kind === 'work' ? project.letter?.paragraphs?.[0] : undefined;
+    expect(esOnly).toBeTruthy();
+    expect(root.textContent).not.toContain(esOnly);
+  });
 });
