@@ -32,7 +32,8 @@ function startStaticServer(rootDir, port) {
       try {
         const urlPath = decodeURIComponent((req.url ?? '/').split('?')[0]);
         let filePath = path.join(rootDir, urlPath);
-        if (!filePath.startsWith(rootDir)) {
+        const rel = path.relative(rootDir, filePath);
+        if (rel.startsWith('..') || path.isAbsolute(rel)) {
           res.writeHead(403);
           res.end('forbidden');
           return;

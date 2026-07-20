@@ -6,7 +6,7 @@ export const APP_ROUTES: Routes = [
     loadComponent: () => import('./pages/home/home.page').then((m) => m.HomePage),
   },
   {
-    path: ':lang/cv',
+    path: ':lang(es|en)/cv',
     loadChildren: () => import('./cv/cv.routes').then((m) => m.CV_ROUTES),
   },
   {
