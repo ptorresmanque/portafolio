@@ -5,6 +5,8 @@
   {{ 'skipLink' | t }}
 </a>
 
+<app-header />
+
 <main id="main" tabindex="-1">
   <app-hero />
   <app-about />
@@ -12,3 +14,5 @@
 </main>
 
 <app-project-dialog [project]="dialogProject()" (closeDialog)="closeDialog()" />
+
+<app-footer />

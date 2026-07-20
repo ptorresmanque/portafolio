@@ -1,7 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
 import { RouterOutlet, ActivatedRoute } from '@angular/router';
-import { Header } from './components/header/header';
-import { Footer } from './components/footer/footer';
 import { TranslationService } from './i18n/translation.service';
 import { SeoService } from './seo/seo.service';
 import {
@@ -14,7 +12,7 @@ import { PROJECTS } from './data/projects';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Footer],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

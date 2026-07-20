@@ -7,12 +7,12 @@
   display: block;
   width: 210mm;
   min-height: 297mm;
-  padding: 12mm;
+  padding: 10mm;
   box-sizing: border-box;
   font-family: 'Archivo', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   color: #0a0a0a;
   background: #ffffff;
-  font-size: 9.5pt;
+  font-size: 9pt;
   line-height: 1.4;
 }
 
@@ -22,7 +22,7 @@
 
 .name {
   margin: 0;
-  font-size: 22pt;
+  font-size: 20pt;
   font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1.1;
@@ -63,7 +63,7 @@
 }
 
 .section-title {
-  font-size: 10.5pt;
+  font-size: 10pt;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -81,7 +81,7 @@
   display: grid;
   grid-template-columns: 48mm 1fr;
   gap: 4mm;
-  margin-bottom: 2.5mm;
+  margin-bottom: 1.8mm;
   page-break-inside: avoid;
 }
 
@@ -133,7 +133,7 @@
 }
 
 .skill-block {
-  margin-bottom: 1mm;
+  margin-bottom: 0.6mm;
   font-size: 9pt;
 }
 
