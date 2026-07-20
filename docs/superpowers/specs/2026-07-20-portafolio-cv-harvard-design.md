@@ -137,10 +137,10 @@ Estructura una columna:
   display: block;
 }
 
-.name { font-size: 22pt; font-weight: 700; letter-spacing: -0.01em; }
-.accent-line { height: 2px; background: #1f2937; margin: 4mm 0 6mm; }
-.contact-line { font-size: 8.5pt; color: #4b5563; display: flex; gap: 6mm; flex-wrap: wrap; }
-.section-title { font-size: 11pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin: 5mm 0 2mm; border-bottom: 0.5pt solid #d1d5db; padding-bottom: 1mm; }
+.name { font-size: 20pt; font-weight: 700; letter-spacing: -0.01em; }
+.accent-line { height: 1.5pt; background: #1f2937; margin: 2mm 0 3mm; }
+.contact-line { font-size: 8.5pt; color: #4b5563; display: flex; gap: 4mm; flex-wrap: wrap; }
+.section-title { font-size: 10pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 1.5mm; border-bottom: 0.5pt solid #d1d5db; padding-bottom: 0.8mm; }
 .experience-row { display: grid; grid-template-columns: 50mm 1fr; gap: 4mm; margin-bottom: 3mm; page-break-inside: avoid; }
 .experience-meta { font-size: 8.5pt; color: #4b5563; }
 .experience-bullets { margin: 0; padding-left: 4mm; }
