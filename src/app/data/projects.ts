@@ -162,7 +162,7 @@ The other pillar was SSR with Angular Universal: the portal sees close to 2M vis
     githubUrl: 'https://github.com/ptorresmanque/CualAutoCompro',
     siteUrl: 'https://cualautocompro.cl',
     image: '/projects/cualautocompro.png',
-    imageAlt: 'Captura del homepage de cualautocompro.cl: hero, comparativa Toyota Corolla vs Mazda CX-5 y sección de features',
+    imageAlt: 'Captura del homepage de cualautocompro.cl: hero con buscador, comparativa Toyota Corolla vs Mazda CX-5 con columnas de especificaciones y precios, y sección de features con badges de marcas',
     shortDescription:
       'Catálogo del mercado automotriz chileno. Puedes revisar, buscar y comparar modelos de todas las marcas que se venden en Chile, y compartir las comparativas que armes con otros usuarios.',
     technologies: ['Angular', 'Angular Material', 'Express', 'Prisma', 'MySQL', 'TypeScript', 'Tailwind CSS', 'Playwright'],
@@ -170,17 +170,17 @@ The other pillar was SSR with Angular Universal: the portal sees close to 2M vis
 
 Como único responsable técnico, participé en todo el ciclo: modelé el dominio en Prisma sobre MySQL, construí el backend en Express + TypeScript con autenticación vía Passport (Google y Apple), y el frontend en Angular 22 con Angular Material. Diseñé una capa de scraping propio que mantiene el catálogo al día y un motor de ranker configurable para ponderar versiones según distintos criterios.
 
-Lo que más disfruté fue el modelo de comparativas. Cada usuario arma su comparación, la comparte con un slug, y otros pueden consultarla o extenderla. Un buen análisis se convierte, de paso, en tráfico orgánico para el producto.`,
+El modelo de comparativas es la pieza central del producto. Cada usuario arma su comparación, la comparte mediante un slug, y otros pueden consultarla o extenderla. Un análisis sólido se convierte, de paso, en tráfico orgánico para el producto.`,
     localized: {
       en: {
-        imageAlt: 'Screenshot of cualautocompro.cl homepage: hero, Toyota Corolla vs Mazda CX-5 comparison, and features section',
+        imageAlt: 'Screenshot of cualautocompro.cl homepage: hero with search bar, Toyota Corolla vs Mazda CX-5 comparison with spec and price columns, and features section with brand badges',
         shortDescription:
           'Catalog of the Chilean auto market. Browse, search, and compare models from every brand sold in Chile, and share the comparisons you build with other users.',
         body: `cualautocompro.cl is my personal project. A tool for analyzing the Chilean auto market and helping anyone who's about to buy a vehicle make a better choice. It lets you browse, search, and compare models and trims from every brand sold in Chile, and share the comparisons you build with other users.
 
 As the sole technical owner I worked the full cycle: modeled the domain in Prisma over MySQL, built the backend in Express + TypeScript with Passport authentication (Google and Apple), and the frontend in Angular 22 with Angular Material. I designed a custom scraping layer that keeps the catalog up to date and a configurable ranker engine for weighting trims against different criteria.
 
-The bit I enjoyed most was the comparison model. Each user builds a comparison, shares it via a slug, and others can view or extend it. A solid analysis becomes, on the way, organic traffic for the product.`,
+The comparison model is the central piece of the product. Each user builds a comparison, shares it via a slug, and others can view or extend it. A solid analysis becomes, on the way, organic traffic for the product.`,
       },
     },
   },

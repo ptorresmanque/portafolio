@@ -8,7 +8,7 @@ const ES = {
   'hero.title.line1': 'Construyo productos',
   'hero.title.highlight': 'que la gente',
   'hero.title.line2': 'usa todos los días.',
-  'hero.subtitle': 'Soy Patricio Manquepillan, desarrollador frontend con foco en Angular y TypeScript.',
+  'hero.subtitle': 'Soy Patricio Manquepillan, desarrollador frontend con foco en Angular y TypeScript. Estos proyectos resumen los productos donde he crecido en los últimos años. Cada uno incluye una carta del responsable que supervisó el trabajo.',
   'hero.credentials':
     '+6 años en producción · Angular lead en Banco Santander · WCAG AA en Comunidad de Madrid',
   'hero.cta.projects': 'Ver proyectos',
@@ -22,7 +22,7 @@ const EN = {
   'hero.title.line1': 'I build products',
   'hero.title.highlight': 'that people',
   'hero.title.line2': 'use every day.',
-  'hero.subtitle': "I'm Patricio Manquepillan, a frontend developer focused on Angular and TypeScript.",
+  'hero.subtitle': "I'm Patricio Manquepillan, a frontend developer focused on Angular and TypeScript. These projects summarize the products where I've grown the most in the last few years. Each one includes a letter from the lead who supervised the work.",
   'hero.credentials':
     '6+ years in production · Angular lead at Banco Santander · WCAG AA at Comunidad de Madrid',
   'hero.cta.projects': 'See projects',
@@ -62,6 +62,7 @@ describe('Hero', () => {
     expect(root.querySelector('h1')?.textContent).toContain('que la gente');
     expect(root.querySelector('h1')?.textContent).toContain('usa todos los días.');
     expect(root.textContent).toContain('Soy Patricio Manquepillan');
+    expect(root.textContent).toContain('carta del responsable que supervisó el trabajo');
     expect(root.textContent).toContain(
       '+6 años en producción · Angular lead en Banco Santander · WCAG AA en Comunidad de Madrid',
     );
@@ -88,6 +89,8 @@ describe('Hero', () => {
     const links = Array.from(root.querySelectorAll<HTMLAnchorElement>('a'));
 
     expect(root.textContent).toContain('Available for new projects');
+    expect(root.textContent).toContain("I'm Patricio Manquepillan");
+    expect(root.textContent).toContain('letter from the lead who supervised the work');
     expect(root.querySelector('h1')?.textContent).toContain('I build products');
     expect(root.textContent).toContain(
       '6+ years in production · Angular lead at Banco Santander · WCAG AA at Comunidad de Madrid',

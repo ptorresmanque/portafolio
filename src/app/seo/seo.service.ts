@@ -3,7 +3,7 @@ import { Inject, Injectable, inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { MetaPayload, JsonLd } from './seo.types';
 
-const SITE_NAME = 'Patricio Manquepillan — Portafolio';
+const SITE_NAME = 'Patricio Manquepillan';
 const DEFAULT_OG = 'https://patriciomanquepillan.com/og-default.png';
 const DEFAULT_URL = 'https://patriciomanquepillan.com/';
 

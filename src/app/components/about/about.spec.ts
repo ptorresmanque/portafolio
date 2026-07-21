@@ -8,24 +8,24 @@ const ES = {
   'about.eyebrow': 'Sobre mí',
   'about.title': 'Producto, equipo y código limpio.',
   'about.paragraph1':
-    'Llevo {years} años en producción, con cientos de usuarios en los productos donde he trabajado.',
+    'Llevo {years} años en producción, con cientos de miles de usuarios en los productos donde he trabajado.',
   'about.paragraph2':
-    'Me obsesionan dos cosas y media. Que la UI se sienta bien al usarla. Que el código envejezca bien. Y que las decisiones técnicas queden justificadas para el siguiente que las lea.',
+    'Tres prioridades guían mi trabajo. Que la interfaz se sienta bien al usarla. Que el código envejezca bien. Y que las decisiones técnicas queden justificadas para el siguiente que las lea.',
   'about.now': 'Ahora liderando frontend en un portal con 2M visitas/mes y WCAG AA estricto.',
   'about.paragraph3':
-    'Hoy trabajo como frontend lead en proyectos de Angular. Cuando hace falta, me meto en backend sin drama.',
+    'Trabajo como frontend lead en proyectos de Angular. Cuando hace falta, participo en el backend con el mismo nivel de rigor.',
 };
 
 const EN = {
   'about.eyebrow': 'About',
   'about.title': 'Product, team, and clean code.',
   'about.paragraph1':
-    "I've spent {years} years in production, with hundreds of users in the products I've worked on.",
+    "I've spent {years} years in production, with hundreds of thousands of users across the products I've worked on.",
   'about.paragraph2':
-    "I'm obsessed with two and a half things. That the UI feels good to use. That the code ages well. And that technical decisions stay justified for whoever reads them next.",
+    "Three priorities guide my work. That the interface feels good to use. That the code ages well. And that technical decisions stay justified for whoever reads them next.",
   'about.now': 'Now leading frontend on a portal with 2M visits/month and strict WCAG AA.',
   'about.paragraph3':
-    'I currently work as a frontend lead on Angular projects. When needed, I jump into backend without drama.',
+    'I work as a frontend lead on Angular projects. When needed, I take part in the backend with the same standard of rigour.',
 };
 
 function setup(translations: Record<string, string>, lang: 'es' | 'en') {
@@ -63,12 +63,12 @@ describe('About', () => {
       'Producto, equipo y código limpio.',
     );
     expect(root.textContent).toContain(`Llevo ${yearsOfExperience()} años en producción`);
-    expect(root.textContent).toContain('Me obsesionan dos cosas y media.');
+    expect(root.textContent).toContain('Tres prioridades guían mi trabajo.');
     expect(root.textContent).toContain(
       'Ahora liderando frontend en un portal con 2M visitas/mes y WCAG AA estricto.',
     );
     expect(root.textContent).toContain(
-      'Hoy trabajo como frontend lead en proyectos de Angular.',
+      'Trabajo como frontend lead en proyectos de Angular.',
     );
   });
 
@@ -101,12 +101,12 @@ describe('About', () => {
     expect(root.textContent).toContain('About');
     expect(root.querySelector('h2')?.textContent).toContain('Product, team, and clean code.');
     expect(root.textContent).toContain(`I've spent ${yearsOfExperience()} years in production`);
-    expect(root.textContent).toContain("I'm obsessed with two and a half things.");
+    expect(root.textContent).toContain('Three priorities guide my work.');
     expect(root.textContent).toContain(
       'Now leading frontend on a portal with 2M visits/month and strict WCAG AA.',
     );
     expect(root.textContent).toContain(
-      'I currently work as a frontend lead on Angular projects.',
+      'I work as a frontend lead on Angular projects.',
     );
   });
 });

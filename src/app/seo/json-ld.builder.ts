@@ -8,22 +8,39 @@ export function buildPerson(): JsonLd {
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: 'Patricio Manquepillan',
+    name: 'Patricio Emanuel Manquepillan Torres',
+    givenName: 'Patricio Emanuel',
+    familyName: 'Manquepillan Torres',
     jobTitle: 'Senior Frontend Developer',
+    description:
+      'Senior Frontend Developer with 6+ years in production. Angular, TypeScript, WCAG AA accessibility.',
     url: SITE_URL,
     email: 'mailto:patriciomanquepillantorres@gmail.com',
     sameAs: [
       'https://github.com/ptorresmanque',
       'https://www.linkedin.com/in/patriciomanquepillan',
+      SITE_URL,
     ],
     knowsAbout: [
       'Angular',
       'TypeScript',
-      'SCADA',
-      'WCAG',
+      'RxJS',
+      'WCAG AA',
+      'Accessibility',
+      'SSR',
+      'Angular Universal',
       'Kubernetes',
       'Java',
       'Spring Boot',
+      'SCADA',
+      'AVEVA System Platform',
+      'Node.js',
+      'Express',
+      'Prisma',
+      'MySQL',
+      'PostgreSQL',
+      'Docker',
+      'SDLC',
     ],
   };
 }
@@ -34,8 +51,11 @@ export function buildWebSite(): JsonLd {
     '@type': 'WebSite',
     url: SITE_URL,
     name: 'Patricio Manquepillan — Portafolio',
-    inLanguage: ['es', 'en'],
-    publisher: { '@type': 'Person', name: 'Patricio Manquepillan' },
+    inLanguage: ['es-CL', 'en-US'],
+    publisher: {
+      '@type': 'Person',
+      name: 'Patricio Emanuel Manquepillan Torres',
+    },
   };
 }
 

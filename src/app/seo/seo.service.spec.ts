@@ -12,7 +12,7 @@ describe('SeoService', () => {
     service = TestBed.inject(SeoService);
   });
 
-  it('setMeta updates title and description', () => {
+  it('setMeta updates title with site identity and description', () => {
     service.setMeta({ title: 'Hi', description: 'desc' });
     expect(document.title).toContain('Hi');
     expect(document.title).toContain('Patricio Manquepillan');
