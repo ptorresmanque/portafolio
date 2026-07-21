@@ -8,9 +8,20 @@ describe('json-ld.builder', () => {
     expect(json['sameAs']).toContain('https://www.linkedin.com/in/patriciomanquepillan');
   });
 
-  it('buildWebSite declares bilingual support', () => {
+  it('buildWebSite declares bilingual support with locale tags', () => {
     const json = buildWebSite();
-    expect(json['inLanguage']).toEqual(['es', 'en']);
+    expect(json['inLanguage']).toEqual(['es-CL', 'en-US']);
+  });
+
+  it('buildPerson enumerates the stack in knowsAbout', () => {
+    const json = buildPerson();
+    const knows = json['knowsAbout'] as readonly string[];
+    expect(knows).toContain('Angular');
+    expect(knows).toContain('TypeScript');
+    expect(knows).toContain('WCAG AA');
+    expect(knows).toContain('Kubernetes');
+    expect(knows).toContain('Spring Boot');
+    expect(knows.length).toBeGreaterThanOrEqual(10);
   });
 
   it('buildCreativeWork uses temporalCoverage (year ranges) and points url at the projects section', () => {
