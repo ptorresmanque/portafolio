@@ -168,7 +168,7 @@ export const CV: Record<'es' | 'en', CvData> = {
   es: {
     header: HEADER,
     summary:
-      'Senior Frontend Developer con +6 años en producción. Angular lead con foco en accesibilidad WCAG AA y sistemas con cientos de miles de usuarios. Cuando hace falta, se mete en backend sin drama.',
+      'Senior Frontend Developer con +6 años en producción. Angular lead con foco en accesibilidad WCAG AA y sistemas con cientos de miles de usuarios. Cuando hace falta, participa en el backend con el mismo nivel de rigor.',
     experience: EXPERIENCE_ES,
     education: [
       {
@@ -183,7 +183,7 @@ export const CV: Record<'es' | 'en', CvData> = {
   en: {
     header: HEADER,
     summary:
-      'Senior Frontend Developer with 6+ years in production. Angular lead focused on WCAG AA accessibility and products used by hundreds of thousands of people. When needed, I jump into backend without drama.',
+      'Senior Frontend Developer with 6+ years in production. Angular lead focused on WCAG AA accessibility and products used by hundreds of thousands of people. When needed, I take part in the backend with the same standard of rigour.',
     experience: EXPERIENCE_EN,
     education: [
       {
