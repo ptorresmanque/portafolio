@@ -22,7 +22,7 @@
   "about.paragraph1": "I've spent {years} years in production, with hundreds of thousands of users across the products I've worked on. I started by unifying the SCADA systems of four Chilean water utilities —centralising operations that had been fragmented across outdated versions— then moved to Banco Santander's Capital area to automate credit backstops in Java and Spring Boot on Kubernetes, a platform that scaled without downtime in a regulated production environment, and today I lead frontend on an institutional portal with strict WCAG AA that serves 2M visits a month. In parallel I maintain cualautocompro.cl, a comparator for the Chilean automotive market where every comparison doubles as shareable content.",
   "about.paragraph2": "Three priorities guide my work. That the interface feels good to use. That the code ages well. And that technical decisions stay justified for whoever reads them next.",
   "about.paragraph3": "I work as a frontend lead on Angular projects. When needed, I take part in the backend with the same standard of rigour.",
-  "about.now": "Now leading frontend on a portal with 2M visits/month and strict WCAG AA.",
+  "about.now": "",
   "projects.title": "Projects",
   "projects.subtitle": "Each project includes a recommendation letter signed by the lead who supervised the work.",
   "projects.kind.work": "Work",

@@ -22,7 +22,7 @@
   "about.paragraph1": "Llevo {years} años en producción, con cientos de miles de usuarios en los productos donde he trabajado. Empecé unificando los SCADA de cuatro sanitarias chilenas —el resultado fue centralizar operación que estaba fragmentada en versiones obsoletas—, después me trasladé al área de Capital de Banco Santander para automatizar backstops crediticios en Java y Spring Boot sobre Kubernetes, plataforma que escaló sin downtime en producción regulada, y hoy lidero frontend en un portal institucional con WCAG AA estricto que sirve 2M visitas al mes. En paralelo mantengo cualautocompro.cl, un comparador del mercado automotriz chileno donde la comparativa es también contenido compartible.",
   "about.paragraph2": "Tres prioridades guían mi trabajo. Que la interfaz se sienta bien al usarla. Que el código envejezca bien. Y que las decisiones técnicas queden justificadas para el siguiente que las lea.",
   "about.paragraph3": "Trabajo como frontend lead en proyectos de Angular. Cuando hace falta, participo en el backend con el mismo nivel de rigor.",
-  "about.now": "Ahora liderando frontend en un portal con 2M visitas/mes y WCAG AA estricto.",
+  "about.now": "",
   "projects.title": "Proyectos",
   "projects.subtitle": "Cada proyecto incluye una carta de recomendación firmada por el responsable que supervisó el trabajo.",
   "projects.kind.work": "Trabajo",
