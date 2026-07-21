@@ -162,7 +162,7 @@ The other pillar was SSR with Angular Universal: the portal sees close to 2M vis
     githubUrl: 'https://github.com/ptorresmanque/CualAutoCompro',
     siteUrl: 'https://cualautocompro.cl',
     image: '/projects/cualautocompro.png',
-    imageAlt: 'Captura del homepage de cualautocompro.cl: hero, comparativa Toyota Corolla vs Mazda CX-5 y sección de features',
+    imageAlt: 'Captura del homepage de cualautocompro.cl: hero con buscador, comparativa Toyota Corolla vs Mazda CX-5 con columnas de especificaciones y precios, y sección de features con badges de marcas',
     shortDescription:
       'Catálogo del mercado automotriz chileno. Puedes revisar, buscar y comparar modelos de todas las marcas que se venden en Chile, y compartir las comparativas que armes con otros usuarios.',
     technologies: ['Angular', 'Angular Material', 'Express', 'Prisma', 'MySQL', 'TypeScript', 'Tailwind CSS', 'Playwright'],
@@ -173,7 +173,7 @@ Como único responsable técnico, participé en todo el ciclo: modelé el domini
 El modelo de comparativas es la pieza central del producto. Cada usuario arma su comparación, la comparte mediante un slug, y otros pueden consultarla o extenderla. Un análisis sólido se convierte, de paso, en tráfico orgánico para el producto.`,
     localized: {
       en: {
-        imageAlt: 'Screenshot of cualautocompro.cl homepage: hero, Toyota Corolla vs Mazda CX-5 comparison, and features section',
+        imageAlt: 'Screenshot of cualautocompro.cl homepage: hero with search bar, Toyota Corolla vs Mazda CX-5 comparison with spec and price columns, and features section with brand badges',
         shortDescription:
           'Catalog of the Chilean auto market. Browse, search, and compare models from every brand sold in Chile, and share the comparisons you build with other users.',
         body: `cualautocompro.cl is my personal project. A tool for analyzing the Chilean auto market and helping anyone who's about to buy a vehicle make a better choice. It lets you browse, search, and compare models and trims from every brand sold in Chile, and share the comparisons you build with other users.

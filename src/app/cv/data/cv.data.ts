@@ -136,7 +136,7 @@ const SKILLS_ES: CvData['skills'] = [
   },
   {
     category: 'Prácticas',
-    items: ['SSR (Angular Universal)', 'SCADA (AVEVA System Platform)', 'Accesibilidad con NVDA / VoiceOver', 'Git', 'SDLC'],
+    items: ['SSR con Angular Universal', 'SCADA sobre AVEVA System Platform', 'Accesibilidad verificada con NVDA y VoiceOver', 'Git', 'SDLC', 'Pruebas E2E con Playwright'],
   },
 ];
 
@@ -155,7 +155,7 @@ const SKILLS_EN: CvData['skills'] = [
   },
   {
     category: 'Practices',
-    items: ['SSR (Angular Universal)', 'SCADA (AVEVA System Platform)', 'Accessibility testing with NVDA / VoiceOver', 'Git', 'SDLC'],
+    items: ['SSR with Angular Universal', 'SCADA on AVEVA System Platform', 'Accessibility verified with NVDA and VoiceOver', 'Git', 'SDLC', 'End-to-end testing with Playwright'],
   },
 ];
 
