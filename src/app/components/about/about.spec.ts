@@ -8,7 +8,7 @@ const ES = {
   'about.eyebrow': 'Sobre mí',
   'about.title': 'Producto, equipo y código limpio.',
   'about.paragraph1':
-    'Llevo {years} años en producción, con cientos de usuarios en los productos donde he trabajado.',
+    'Llevo {years} años en producción, con cientos de miles de usuarios en los productos donde he trabajado.',
   'about.paragraph2':
     'Tres prioridades guían mi trabajo. Que la interfaz se sienta bien al usarla. Que el código envejezca bien. Y que las decisiones técnicas queden justificadas para el siguiente que las lea.',
   'about.now': 'Ahora liderando frontend en un portal con 2M visitas/mes y WCAG AA estricto.',
@@ -20,7 +20,7 @@ const EN = {
   'about.eyebrow': 'About',
   'about.title': 'Product, team, and clean code.',
   'about.paragraph1':
-    "I've spent {years} years in production, with hundreds of users in the products I've worked on.",
+    "I've spent {years} years in production, with hundreds of thousands of users across the products I've worked on.",
   'about.paragraph2':
     "Three priorities guide my work. That the interface feels good to use. That the code ages well. And that technical decisions stay justified for whoever reads them next.",
   'about.now': 'Now leading frontend on a portal with 2M visits/month and strict WCAG AA.',

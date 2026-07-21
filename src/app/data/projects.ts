@@ -170,7 +170,7 @@ The other pillar was SSR with Angular Universal: the portal sees close to 2M vis
 
 Como único responsable técnico, participé en todo el ciclo: modelé el dominio en Prisma sobre MySQL, construí el backend en Express + TypeScript con autenticación vía Passport (Google y Apple), y el frontend en Angular 22 con Angular Material. Diseñé una capa de scraping propio que mantiene el catálogo al día y un motor de ranker configurable para ponderar versiones según distintos criterios.
 
-Lo que más disfruté fue el modelo de comparativas. Cada usuario arma su comparación, la comparte con un slug, y otros pueden consultarla o extenderla. Un buen análisis se convierte, de paso, en tráfico orgánico para el producto.`,
+El modelo de comparativas es la pieza central del producto. Cada usuario arma su comparación, la comparte mediante un slug, y otros pueden consultarla o extenderla. Un análisis sólido se convierte, de paso, en tráfico orgánico para el producto.`,
     localized: {
       en: {
         imageAlt: 'Screenshot of cualautocompro.cl homepage: hero, Toyota Corolla vs Mazda CX-5 comparison, and features section',
@@ -180,7 +180,7 @@ Lo que más disfruté fue el modelo de comparativas. Cada usuario arma su compar
 
 As the sole technical owner I worked the full cycle: modeled the domain in Prisma over MySQL, built the backend in Express + TypeScript with Passport authentication (Google and Apple), and the frontend in Angular 22 with Angular Material. I designed a custom scraping layer that keeps the catalog up to date and a configurable ranker engine for weighting trims against different criteria.
 
-The bit I enjoyed most was the comparison model. Each user builds a comparison, shares it via a slug, and others can view or extend it. A solid analysis becomes, on the way, organic traffic for the product.`,
+The comparison model is the central piece of the product. Each user builds a comparison, shares it via a slug, and others can view or extend it. A solid analysis becomes, on the way, organic traffic for the product.`,
       },
     },
   },
